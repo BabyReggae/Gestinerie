@@ -2,8 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 router.use( '/user' , require('./user.js') );
-router.use( '/item' , require('./item.js') );
-router.use( '/skin' , require('./skin.js') );
+router.use( '/customers' , require('./customers.js') );
+// router.use( '/producers' , require('./producers.js') );
+
+// router.use( '/item' , require('./item.js') );
+// router.use( '/skin' , require('./skin.js') );
+
 
 
 router.get('/', (req,res)=> {

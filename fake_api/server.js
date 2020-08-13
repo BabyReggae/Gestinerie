@@ -24,7 +24,7 @@ if (cluster.isMaster) {
     const bodyParser = require("body-parser");
     var mysql = require('mysql');
 
-    setInterval( function(){ console.log( "runing => " , new Date() );} , 60000 );
+    //setInterval( function(){ console.log( "runing => " , new Date() );} , 60000 );
 
     // parse requests of content-type: application/json
     app.use(bodyParser.json());

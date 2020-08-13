@@ -32,16 +32,45 @@ export const ROUTES: RouteInfo[] = [
         submenu: []
     },
     {
-        path: '/section/customers',
-        title: 'Clients',
-        icon: 'mdi mdi-equal',
+        path: '/section/boxes',
+        title: 'Paniers',
+        icon: 'mdi mdi-inbox',
         class: '',
         label: '',
         labelClass: '',
         extralink: false,
         submenu: []
     },
-
+    {
+        path: '/section/customers',
+        title: 'Clients',
+        icon: 'mdi mdi-face-profile',
+        class: '',
+        label: '',
+        labelClass: '',
+        extralink: false,
+        submenu: []
+    },
+    {
+        path: '/section/orders',
+        title: 'Commandes',
+        icon: 'mdi mdi-format-list-numbers',
+        class: '',
+        label: '',
+        labelClass: '',
+        extralink: false,
+        submenu: []
+    },
+    {
+        path: '/section/producers',
+        title: 'Producteurs',
+        icon: 'mdi mdi-cow',
+        class: '',
+        label: '',
+        labelClass: '',
+        extralink: false,
+        submenu: []
+    },
     {
         path: '',
         title: 'UI Components',
