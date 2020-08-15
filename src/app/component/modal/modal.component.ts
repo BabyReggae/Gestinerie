@@ -10,8 +10,8 @@ export class NgbdModalBasicComponent {
 
 	constructor(private modalService: NgbModal) {}
 	// This is for the first modal
-	open1(content1:string) {
-		this.modalService.open(content1, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+	open_modal(content_modal:string) {
+		this.modalService.open(content_modal, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
 			this.closeResult = `Closed with: ${result}`;
 		}, (reason) => {
 			this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

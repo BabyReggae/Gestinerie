@@ -1,22 +1,55 @@
-<h2>Tables component</h2>
-<!-- <table class="table">
-  <thead>
-    <tr>
-      <th *ngFor="let head of headElements" scope="col">{{head}} </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let el of elements">
-      <th scope="row">{{el.id}}</th>
-      <td>{{el.first}}</td>
-      <td>{{el.last}}</td>
-      <td>{{el.handle}}</td>
-    </tr>
-  </tbody>
-</table> -->
+<h2>Summary Table of {{ tableTitle }}</h2>
 
-<hr><hr>
-<br>
+<!-- <hr><br>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Modal with default options</h3>
+        <h6 class="card-subtitle">This is basic toggletype accordion</h6>  
+        <button class="btn btn-lg btn-outline-primary" (click)="open_modal(content_modal)">Launch demo modal</button>
+        <div class="m-t-20">{{ closeResult }}</div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- end modal template -->
+<ng-template #content_modal let-modal >
+  <div class="modal-header cs-modalContainer">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body cs-modalContainer">
+    <form>
+      <div class="form-group">
+       <div>
+        <label for="dateOfBirth" class="cs-label">Date of birth</label>
+        <div class="input-group">
+          <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button"><i class="fa fa-calendar"></i></button>
+          </div>
+        </div>
+       </div>
+
+<div>
+  <label for="someData" class="cs-label">Normal Input</label>
+  <div class="input-group">
+    <input id="someData" class="form-control" placeholder="oui?">
+  </div>
+</div>
+
+
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer cs-modalContainer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>
+<!-- end modal template -->
 
 <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
@@ -24,28 +57,35 @@
 
 <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
     <!-- Position Column -->
-    <ng-container matColumnDef="position">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+    <div *ngFor="let el of colDef;">
+      <ng-container matColumnDef="{{ el }}">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{el}} </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element[el]}} </mat-cell>
+      </ng-container>
+    </div>
+
+    <ng-container matColumnDef="Action">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
+      <mat-cell *matCellDef="let element"> 
+        <button (click)="open_modal(content_modal)" class="btn btn-sm btn-info mr-1 ml-1">Edit</button>
+        <button class="btn btn-sm btn-danger mr-1 ml-1">Delete</button> 
+      </mat-cell>
     </ng-container>
-  
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
+
+    <!-- <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
     </ng-container>
   
-    <!-- Weight Column -->
     <ng-container matColumnDef="weight">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Weight </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
     </ng-container>
   
-    <!-- Symbol Column -->
     <ng-container matColumnDef="symbol">
       <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
       <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
-    </ng-container>
+    </ng-container> -->
   
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row (click)="getData(row)"  *matRowDef="let row; columns: displayedColumns;"></mat-row>

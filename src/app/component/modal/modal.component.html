@@ -7,7 +7,7 @@
 				<!--- ------------------
 					Modal with date picker (NgbdModalBasicComponent)  
 					---------------------->
-				<ng-template #content1 let-modal>
+				<ng-template #content_modal let-modal>
 					<div class="modal-header">
 						<h4 class="modal-title" id="modal-basic-title">Profile update</h4>
 						<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -32,7 +32,7 @@
 					</div>
 				</ng-template>
 
-				<button class="btn btn-lg btn-outline-primary" (click)="open1(content1)">Launch demo modal</button>
+				<button class="btn btn-lg btn-outline-primary" (click)="open_modal(content_modal)">Launch demo modal</button>
 
 				
 				<div class="m-t-20">{{ closeResult }}</div>

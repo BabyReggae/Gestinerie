@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
 import { DashboardComponent } from './dashboard.component';
-import { StaychillComponent } from 'app/staychill/staychill.component';
 import { DataTableComponent } from 'app/data-table/data-table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -44,7 +43,7 @@ const routes: Routes = [
     ],
     declarations: [
         DashboardComponent,
-        StaychillComponent,
+        // StaychillComponent,
         DataTableComponent
     ]
 })
