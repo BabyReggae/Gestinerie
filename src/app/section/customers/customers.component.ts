@@ -1,13 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomersService } from "../../services/customers.service";
-
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from "@angular/material/input";
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
+import { Observable } from 'rxjs';
 
 
 
@@ -19,22 +12,34 @@ import { MatButtonModule } from '@angular/material/button';
 export class CustomersComponent implements OnInit {
 
   mainData: any;
+  customerObservable:any;
 
   constructor( private customerService : CustomersService ) {
   }
 
   ngOnInit(): void {
-    this.customerService.test_fct();
-    this.mainData = "test async";
-
     //get token from storage session
     let fake_token = "ehoui";
 
     // prepare summary data 
     this.mainData = this.customerService.load_basicInfo( fake_token );
-    
+   
+    this.customerObservable = new Observable(observer => {
+
+      this.mainData.then( 
+        ( res: any) => { 
+
+          observer.next( res );
+          console.log(  " observer emit" );
+        },
+        ( err: any) => { console.log('ça, sa pue') } 
+      )
+        // observer.complete();
+    });
   }
 
-
+  send_upd(  data : any ){
+    console.log( data , "<3" );
+  }
 
 }

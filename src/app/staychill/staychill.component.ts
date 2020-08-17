@@ -11,10 +11,12 @@ import { MatInputModule } from "@angular/material/input";
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 
+import { Observable } from 'rxjs';
+import { FormBuilder } from '@angular/forms';
+
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-
-
-
+import { cpuUsage } from 'process';
+import { isNumber } from 'util';
 
 export interface PeriodicElement {
   name: string;
@@ -49,46 +51,60 @@ let ELEMENT_DATA: any[] = [ //PeriodicElement
 
 export class StaychillComponent implements OnInit{
 
-  constructor(private modalService: NgbModal){
+  constructor(private modalService: NgbModal,  private formBuilder : FormBuilder ){
+
+
 
   }
-  @Input() summary_data_table_req :any;
 
+  @Input() savefunc:any;
+  @Input() answers!: Observable<any[]>;
 
-  // summary_data_table : any;
-  //displayedColumns: any[] = [ 'position','name', 'weight', 'symbol'];
   displayedColumns: any[] = [];
   colDef: any[] = [];
   tableTitle:any;
-
+  modalData: any[] = [];
   closeResult: string='';
+  checkoutForm:any;
+  formObjectData:any;
+
 
   // mainDataColDisplay
 
 
 
-
-
-  
   ngOnInit(){
     //http://localhost:8080/api/customers/bacic_info?token=coucou
     this.dataSource = new MatTableDataSource( ELEMENT_DATA );
 
+    this.answers.subscribe({
 
-    this.summary_data_table_req.then( 
-      ( res: any) => { 
+      //fill component vars
+      next: (value: any) => {
 
-        ELEMENT_DATA = Object.values( res.data ),
-        
-        this.tableTitle = res.title;
-        this.colDef = res.col;
-        this.displayedColumns = res.displayedCol;
+        ELEMENT_DATA = Object.values( value.data );
+
+        this.tableTitle = value.title;
+        this.colDef = value.col;
+        this.displayedColumns = value.displayedCol;
+
+
         this.displayedColumns.push( "Action" );
-
+        
         this.update_tableData( ELEMENT_DATA );
+
+        console.log( this );
+
+        
+
       },
-      ( err: any) => { console.log('ça, sa pue') }
-    )
+      error: (err: any) => console.error(err),
+      complete: () => console.log('DONE!')
+  });
+
+
+
+
   }
 
   dataSource = new MatTableDataSource( ELEMENT_DATA );
@@ -112,15 +128,48 @@ export class StaychillComponent implements OnInit{
     console.log( id )
   }
 
-	open_modal(content_modal:string) {
+  createForm( data:any){
+    console.log( data );
+
+
+
+    this.checkoutForm = this.formBuilder.group( data );
+
+  }
+
+  
+	open_modal(content_modal:string, datas:any ) {
+
+    this.modalData = [];
+    let input_loadData : any = {};
+
+    for (const key in datas) {
+      if (Object.prototype.hasOwnProperty.call(datas, key)) {
+        
+        const element = datas[key];
+        const isAnDate = ( Date.parse( element ).toString() != "NaN" ) && !isNumber( element );
+        const isUpdatable = false;
+
+        input_loadData[ key ] = element;
+        this.modalData.push( [ key , element, isAnDate, isUpdatable ] );
+
+
+      }
+    }
+
+    this.createForm( input_loadData );
+
+    
 		this.modalService.open(content_modal, {ariaLabelledBy: 'modal-basic-title', size : "lg"}).result.then((result) => {
-			this.closeResult = `Closed with: ${result}`;
+      this.closeResult = `Closed with: ${result}`;
 		}, (reason) => {
-			this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
 		});
   }
-  
 
+  onSubmit( data:any){
+    this.savefunc( data );
+  }
 
   private getDismissReason(reason: ModalDismissReasons): string {
 		if (reason === ModalDismissReasons.ESC) {

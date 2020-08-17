@@ -9,3 +9,8 @@ table{
 .cs-modalContainer{
     background-color: ghostwhite;
 }
+
+.cs-modal-body{
+    overflow: auto;
+    max-height: 60vh;
+}

@@ -1,8 +1,5 @@
 <div class="row">
     <div class="col-md-12">
-        <app-staychill 
-        [summary_data_table_req]="mainData" 
-        >
-    </app-staychill>
+        <app-staychill [answers]="customerObservable" [savefunc]="this.send_upd" ></app-staychill>
     </div>
 </div>

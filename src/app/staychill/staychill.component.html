@@ -22,32 +22,41 @@
     </button>
   </div>
   <div class="modal-body cs-modalContainer">
-    <form>
+    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit(checkoutForm.value)">
       <div class="form-group">
-       <div>
-        <label for="dateOfBirth" class="cs-label">Date of birth</label>
-        <div class="input-group">
-          <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button"><i class="fa fa-calendar"></i></button>
+
+        <div class="cs-modal-body">
+          <div *ngFor="let lineInfo of modalData" >
+
+            <div *ngIf="displayedColumns.includes( lineInfo[0]) && lineInfo[2]"> 
+              <label for="dateOfBirth" class="cs-label">{{lineInfo[0]}}</label>
+              <div class="input-group">
+                <input [id]="lineInfo[0]" class="form-control mb-2" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button"><i class="fa fa-calendar"></i></button>
+                </div>
+              </div>
+            </div>
+    
+              <div *ngIf="displayedColumns.includes( lineInfo[0] ) && !lineInfo[2]">
+                <label for="someData" class="cs-label">{{lineInfo[0]}}</label>
+                <div class="input-group">
+                  <input [id]="lineInfo[0]" [formControlName]="lineInfo[0]" class="form-control mb-2" placeholder="oui?">
+                </div>
+              </div>
           </div>
         </div>
-       </div>
 
-<div>
-  <label for="someData" class="cs-label">Normal Input</label>
-  <div class="input-group">
-    <input id="someData" class="form-control" placeholder="oui?">
-  </div>
-</div>
+        
 
+        <div class="modal-footer cs-modalContainer">
+          <button type="button" class="btn btn-outline-dark" type="button" (click)="onSubmit(checkoutForm.value);modal.close('Save click');">Save</button>
+        </div>
 
       </div>
     </form>
   </div>
-  <div class="modal-footer cs-modalContainer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-  </div>
+
 </ng-template>
 <!-- end modal template -->
 
@@ -57,7 +66,7 @@
 
 <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
     <!-- Position Column -->
-    <div *ngFor="let el of colDef;">
+    <div *ngFor="let el of colDef; let i = index">
       <ng-container matColumnDef="{{ el }}">
         <mat-header-cell *matHeaderCellDef mat-sort-header> {{el}} </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element[el]}} </mat-cell>
@@ -67,7 +76,7 @@
     <ng-container matColumnDef="Action">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
       <mat-cell *matCellDef="let element"> 
-        <button (click)="open_modal(content_modal)" class="btn btn-sm btn-info mr-1 ml-1">Edit</button>
+        <button (click)="open_modal(content_modal , element )" class="btn btn-sm btn-info mr-1 ml-1">Edit</button>
         <button class="btn btn-sm btn-danger mr-1 ml-1">Delete</button> 
       </mat-cell>
     </ng-container>

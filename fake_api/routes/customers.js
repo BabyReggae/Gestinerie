@@ -48,12 +48,12 @@ router.get('/bacic_info?', (req,res) => {
 	if ( token == undefined ) res.send( "token non fourni" );
 
   let allCustomers = {
-    0 : { id : 0 , name : "Jean", ville : "Lille", nbCmdOld : 7, nbCmdCurrent : 1, abonnement : "prenium" },
-    1 : { id : 1 , name : "Silva", ville : "Lille", nbCmdOld : 7, nbCmdCurrent : 1, abonnement : "prenium" },
-    2 : { id : 2 , name : "Jean", ville : "Lille", nbCmdOld : 7, nbCmdCurrent : 1, abonnement : "prenium" },
-    3 : { id : 3 , name : "Jacques", ville : "Lille", nbCmdOld : 7, nbCmdCurrent : 1, abonnement : "standard" },
-    4 : { id : 4 , name : "Jean", ville : "Santa-Cruz", nbCmdOld : 7, nbCmdCurrent : 1, abonnement : "prenium" },
-    5 : { id : 5 , name : "Jean", ville : "Lille", nbCmdOld : 7, nbCmdCurrent : 1, abonnement : "prenium" },
+    0 : { id : 0 , name : "Jean", ville : "Lille", nbCmd_old : 7, nbCmd_cur : 1, abonnement : "prenium", email : "dany@gmail.com" , date_crea : new Date() },
+    1 : { id : 1 , name : "Silva", ville : "Lille", nbCmd_old : 7, nbCmd_cur : 1, abonnement : "prenium" , email : "dany@gmail.com" , date_crea : new Date()},
+    2 : { id : 2 , name : "Jean", ville : "Lille", nbCmd_old : 7, nbCmd_cur : 5, abonnement : "prenium", email : "dany@gmail.com" , date_crea : new Date() },
+    3 : { id : 3 , name : "Jacques", ville : "Lille", nbCmd_old : 7, nbCmd_cur : 3, abonnement : "standard", email : "dany@gmail.com" , date_crea : new Date() },
+    4 : { id : 4 , name : "Jean", ville : "Santa-Cruz", nbCmd_old : 7, nbCmd_cur : 1, abonnement : "prenium", email : "dany@gmail.com" , date_crea : new Date() },
+    5 : { id : 5 , name : "Jean", ville : "Lille", nbCmd_old : 7, nbCmd_cur : 1, abonnement : "prenium", email : "dany@gmail.com" , date_crea : new Date() },
   };
 
 
