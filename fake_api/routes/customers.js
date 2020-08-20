@@ -48,12 +48,57 @@ router.get('/bacic_info?', (req,res) => {
 	if ( token == undefined ) res.send( "token non fourni" );
 
   let allCustomers = {
-    0 : { id : 0 , name : "Jean", ville : "Lille", nbCmd_old : 7, nbCmd_cur : 1, abonnement : "prenium", email : "dany@gmail.com" , date_crea : new Date() },
-    1 : { id : 1 , name : "Silva", ville : "Lille", nbCmd_old : 7, nbCmd_cur : 1, abonnement : "prenium" , email : "dany@gmail.com" , date_crea : new Date()},
-    2 : { id : 2 , name : "Jean", ville : "Lille", nbCmd_old : 7, nbCmd_cur : 5, abonnement : "prenium", email : "dany@gmail.com" , date_crea : new Date() },
-    3 : { id : 3 , name : "Jacques", ville : "Lille", nbCmd_old : 7, nbCmd_cur : 3, abonnement : "standard", email : "dany@gmail.com" , date_crea : new Date() },
-    4 : { id : 4 , name : "Jean", ville : "Santa-Cruz", nbCmd_old : 7, nbCmd_cur : 1, abonnement : "prenium", email : "dany@gmail.com" , date_crea : new Date() },
-    5 : { id : 5 , name : "Jean", ville : "Lille", nbCmd_old : 7, nbCmd_cur : 1, abonnement : "prenium", email : "dany@gmail.com" , date_crea : new Date() },
+    0 : {
+      "id": 1,
+      "firstname": "Super",
+      "lastname": "Admin",
+      "email": "admin@rasdinerie.com",
+      "address": "1 rue victor hugo",
+      "additional_address": null,
+      "city": "Lille",
+      "zip": "59000",
+      "password": "password",
+      "is_premium": false,
+      "role": "admin",
+      "createdAt": "2020-08-17T23:55:29.212Z",
+      "updatedAt": "2020-08-17T23:55:29.212Z",
+      "creditCards": [],
+      "commands": []
+  },
+  1 : {
+      "id": 2,
+      "firstname": "Jean",
+      "lastname": "Louche",
+      "email": "jlouche@gmail.com",
+      "address": "1 rue de la victoire",
+      "additional_address": null,
+      "city": "Lille",
+      "zip": "59000",
+      "password": "123456",
+      "is_premium": true,
+      "role": "user",
+      "createdAt": "2020-08-17T23:55:29.212Z",
+      "updatedAt": "2020-08-17T23:55:29.212Z",
+      "creditCards": [],
+      "commands": []
+  },
+  2 : {
+      "id": 3,
+      "firstname": "Zoe",
+      "lastname": "Kesako",
+      "email": "zoe.kesako@gmail.com",
+      "address": "1 rue Solferino",
+      "additional_address": null,
+      "city": "Lille",
+      "zip": "59000",
+      "password": "123456",
+      "is_premium": true,
+      "role": "user",
+      "createdAt": "2020-08-17T23:55:29.212Z",
+      "updatedAt": "2020-08-17T23:55:29.212Z",
+      "creditCards": [],
+      "commands": []
+  }
   };
 
 

@@ -1,19 +1,5 @@
-<h2>Summary Table of {{ tableTitle }}</h2>
+<h2>Table {{ tableTitle }}</h2>
 
-<!-- <hr><br>
-<div class="row">
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-body">
-        <h3 class="card-title">Modal with default options</h3>
-        <h6 class="card-subtitle">This is basic toggletype accordion</h6>  
-        <button class="btn btn-lg btn-outline-primary" (click)="open_modal(content_modal)">Launch demo modal</button>
-        <div class="m-t-20">{{ closeResult }}</div>
-      </div>
-    </div>
-  </div>
-</div> -->
-<!-- end modal template -->
 <ng-template #content_modal let-modal >
   <div class="modal-header cs-modalContainer">
     <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
@@ -21,6 +7,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
+
   <div class="modal-body cs-modalContainer">
     <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit(checkoutForm.value)">
       <div class="form-group">
@@ -31,7 +18,7 @@
             <div *ngIf="displayedColumns.includes( lineInfo[0]) && lineInfo[2]"> 
               <label for="dateOfBirth" class="cs-label">{{lineInfo[0]}}</label>
               <div class="input-group">
-                <input [id]="lineInfo[0]" class="form-control mb-2" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+                <input [id]="lineInfo[0]" [formControlName]="lineInfo[0]" class="form-control mb-2" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
                 <div class="input-group-append">
                   <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button"><i class="fa fa-calendar"></i></button>
                 </div>
@@ -41,7 +28,7 @@
               <div *ngIf="displayedColumns.includes( lineInfo[0] ) && !lineInfo[2]">
                 <label for="someData" class="cs-label">{{lineInfo[0]}}</label>
                 <div class="input-group">
-                  <input [id]="lineInfo[0]" [formControlName]="lineInfo[0]" class="form-control mb-2" placeholder="oui?">
+                  <input [id]="lineInfo[0]" [formControlName]="lineInfo[0]" class="form-control mb-2" placeholder="">
                 </div>
               </div>
           </div>
@@ -50,7 +37,8 @@
         
 
         <div class="modal-footer cs-modalContainer">
-          <button type="button" class="btn btn-outline-dark" type="button" (click)="onSubmit(checkoutForm.value);modal.close('Save click');">Save</button>
+          <button *ngIf="!addModal" type="button" class="btn btn-outline-primary" type="button" (click)="onSubmit(checkoutForm.value, addModal);modal.close('Save click');">Modifier</button>
+          <button *ngIf="addModal" type="button" class="btn btn-outline-success" type="button" (click)="onSubmit(checkoutForm.value, addModal);modal.close('Save click');">Ajouter</button>
         </div>
 
       </div>
@@ -61,41 +49,46 @@
 <!-- end modal template -->
 
 <mat-form-field>
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search" [value]="filterVal">
 </mat-form-field>
+<button *ngIf="addElementAllow" (click)="open_modal(content_modal , modalData[0], true )" class="btn btn-success float-right">Ajouter</button>
+<button *ngIf="hasExternalAddComponent" (click)="externalAddFunc()" class="btn btn-primary float-right">Créer</button>
+
+
 
 <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
     <!-- Position Column -->
     <div *ngFor="let el of colDef; let i = index">
-      <ng-container matColumnDef="{{ el }}">
+
+      <ng-container *ngIf="el !== 'image'" matColumnDef="{{ el }}">
         <mat-header-cell *matHeaderCellDef mat-sort-header> {{el}} </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element[el]}} </mat-cell>
       </ng-container>
+
+      <ng-container *ngIf="el == 'image'" matColumnDef="{{ el }}">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{el}} </mat-header-cell>
+        <mat-cell *matCellDef="let element"> <img [src]="element[el]" width="40px" height="40px" class="img rounded"> </mat-cell>
+      </ng-container>
+
     </div>
 
     <ng-container matColumnDef="Action">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
-      <mat-cell *matCellDef="let element"> 
-        <button (click)="open_modal(content_modal , element )" class="btn btn-sm btn-info mr-1 ml-1">Edit</button>
-        <button class="btn btn-sm btn-danger mr-1 ml-1">Delete</button> 
+      <mat-cell *matCellDef="let element">
+
+
+        <button *ngIf="editable" (click)="open_modal(content_modal , element )" class="btn btn-sm btn-info mr-1 ml-1" title="Editer la ligne"><i class="mdi mdi-24px mdi-table-edit"></i></button>
+        <button *ngIf="hasExternalAddComponent" (click)="externalUpdFunc( element.id )" class="btn btn-sm btn-info mr-1 ml-1" title="Editer"><i class="mdi mdi-24px mdi-table-edit"></i></button>
+
+        <div *ngFor="let btn of table_btnAction_funcs; let i = index">
+          <button (click)="btn.click_func(element)" class="btn btn-sm btn-{{btn.color}} mr-1 ml-1" [title]="btn.content" ><i [class]="btn.icon"></i> </button>
+        </div>
+
+
       </mat-cell>
     </ng-container>
-
-    <!-- <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-    </ng-container>
-  
-    <ng-container matColumnDef="weight">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Weight </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
-    </ng-container>
-  
-    <ng-container matColumnDef="symbol">
-      <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
-    </ng-container> -->
   
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row (click)="getData(row)"  *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
   </mat-table>

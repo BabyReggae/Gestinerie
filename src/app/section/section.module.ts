@@ -10,7 +10,6 @@ import { CustomersComponent } from './customers/customers.component';
 import { ProducersComponent } from './producers/producers.component';
 import { OrdersComponent } from './orders/orders.component';
 import { BoxesComponent } from './boxes/boxes.component';
-import { StaychillComponent } from 'app/staychill/staychill.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -18,7 +17,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from "@angular/material/input";
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { CustomersService } from 'app/services/customers.service';
+
+import { StaychillComponent } from "../staychill/staychill.component";
+import { CustomersService } from '../services/customers.service';
+import { OrdersService } from '../services/orders.services';
+import { ProductsService } from "../services/products.service";
+import { RecipesService } from '../services/recipes.services';
+
+import { RecipesComponent } from './recipes/recipes.component';
+import { ProductsComponent } from './products/products.component';
+import { BoxesService } from '../services/boxes.services';
+
 
 
 @NgModule({
@@ -41,10 +50,16 @@ import { CustomersService } from 'app/services/customers.service';
         ProducersComponent,
         OrdersComponent,
         BoxesComponent,
-        StaychillComponent
+        StaychillComponent,
+        RecipesComponent,
+        ProductsComponent
     ],
     providers:[
-      CustomersService
+      CustomersService,
+      OrdersService,
+      ProductsService,
+      RecipesService,
+      BoxesService
     ]
   })
   export class SectionsModule {}

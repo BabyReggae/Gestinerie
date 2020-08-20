@@ -1,5 +1,6 @@
 import { RouteInfo } from './sidebar.metadata';
 
+///*mdi-face-profile << ICON USER ? 
 export const ROUTES: RouteInfo[] = [
     {
         path: '',
@@ -32,19 +33,9 @@ export const ROUTES: RouteInfo[] = [
         submenu: []
     },
     {
-        path: '/section/boxes',
-        title: 'Paniers',
-        icon: 'mdi mdi-inbox',
-        class: '',
-        label: '',
-        labelClass: '',
-        extralink: false,
-        submenu: []
-    },
-    {
         path: '/section/customers',
         title: 'Clients',
-        icon: 'mdi mdi-face-profile',
+        icon: 'mdi mdi-account-multiple',
         class: '',
         label: '',
         labelClass: '',
@@ -54,7 +45,7 @@ export const ROUTES: RouteInfo[] = [
     {
         path: '/section/orders',
         title: 'Commandes',
-        icon: 'mdi mdi-format-list-numbers',
+        icon: 'mdi mdi-format-list-bulleted',
         class: '',
         label: '',
         labelClass: '',
@@ -65,6 +56,36 @@ export const ROUTES: RouteInfo[] = [
         path: '/section/producers',
         title: 'Producteurs',
         icon: 'mdi mdi-cow',
+        class: '',
+        label: '',
+        labelClass: '',
+        extralink: false,
+        submenu: []
+    },
+    {
+        path: '/section/products',
+        title: 'Produits',
+        icon: 'mdi mdi-barley',
+        class: '',
+        label: '',
+        labelClass: '',
+        extralink: false,
+        submenu: []
+    },
+    {
+        path: '/section/boxes',
+        title: 'Paniers',
+        icon: 'mdi mdi-basket',
+        class: '',
+        label: '',
+        labelClass: '',
+        extralink: false,
+        submenu: []
+    },
+    {
+        path: '/section/recipes',
+        title: 'Recettes',
+        icon: 'mdi mdi-silverware-variant',
         class: '',
         label: '',
         labelClass: '',

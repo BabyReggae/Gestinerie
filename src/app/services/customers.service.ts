@@ -4,8 +4,11 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { promise } from 'protractor';
 import { title } from 'process';
+import axios from "axios";
+import { AxiosInstance } from "axios";
 
 import { Customer } from "../data-models/customers.model";
+
 
 
 declare var $:any;
@@ -18,14 +21,34 @@ export class CustomersService {
         private router: Router ,
     ){}
 
+    test_fct(){ //async
+        console.log( 'COUCOU ');
+        // var settings = {
+        //     "url": "https://radisnerie-api-production.herokuapp.com/api/products",
+        //     "method": "GET",
+        //     "timeout": 0,
+        //     "headers": {
+        //       "Content-Type": "application/json"
+        //     },
+        //     "data": JSON.stringify({"id":"ALL"}),
+        //   };
+          
 
-    test_fct(){
-        console.log('customers service up');
+
+        // let resAxio = await axios({
+        //     url: 'https://radisnerie-api-production.herokuapp.com/api/users',
+        //     method: 'GET',
+        //     data: {id: 'ALL'}
+        // })
+
+        // //  resAxio.then((data)=>{
+        // //     console.log( "below is the res of api VV")
+        // //     console.log( data );
+        // //  })  
+        // console.log( resAxio );
     }
 
     load_basicInfo( token : string ){
-        //http request // get 
-        //http://localhost:8080/api/customers/bacic_info?token=coucou
         return new Promise( (resolve, reject) => {
 
             this.httpClient
@@ -36,13 +59,33 @@ export class CustomersService {
 
                 let colDef = Object.keys( data[0] );
 
-                let UnShownedCol = ['id'];
+                let UnShownedCol = ['id' , "address" , "password", "role" , "creditCards" , "createdAt" , "updatedAt", "commands"];
 
                 let displayedCol = colDef.filter( n=> !UnShownedCol.includes(n) );
 
-                let testy = Object.keys(data).map(item => { data[item] = new Customer( data[item] );  });
-                
+                let testy = Object.keys(data)
+                .map(item => { 
+                    let preparedConstructor = data[item];
 
+                    data[item] = new Customer(
+                        data[item].id,
+                        data[item].firstname,
+                        data[item].lastname,
+                        data[item].email,
+                        data[item].address,
+                        data[item].additional_address,
+                        data[item].city,
+                        data[item].zip,
+                        data[item].password,
+                        data[item].is_premium,
+                        data[item].role,
+                        data[item].createdAt,
+                        data[item].updatedAt,
+                        data[item].creditCards,
+                        data[item].commands
+                    );  
+                });
+                
 
                 resolve({ 
                     title : "Clients",
@@ -53,6 +96,17 @@ export class CustomersService {
 
             });
         });
+
+    }
+
+    update(data : any){
+        //expected customer object
+        console.log( "make a post request to update dataas customers" , data )
+    }
+
+    send_email( emailData:any ){
+        console.log( "envoie d'un email ");
+        console.log( emailData.email, emailData.text );
 
     }
 

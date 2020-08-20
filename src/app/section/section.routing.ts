@@ -1,8 +1,11 @@
 import { Routes } from '@angular/router';
+import { BoxesComponent } from './boxes/boxes.component';
 import { CustomersComponent } from './customers/customers.component';
 import { OrdersComponent } from './orders/orders.component';
 import { ProducersComponent } from './producers/producers.component';
-import { BoxesComponent } from './boxes/boxes.component';
+import { ProductsComponent } from './products/products.component';
+import { RecipesComponent } from "./recipes/recipes.component";
+
 
 export const SectionsRoutes: Routes = [
 	{
@@ -55,7 +58,31 @@ export const SectionsRoutes: Routes = [
 						{ title: 'Producteurs' }
 					]
 				}
-            }
+			},
+			{
+				path: 'products',
+				component: ProductsComponent,
+				data: {
+					title: 'Produits',
+					urls: [
+						{ title: 'Dashboard', url: '/dashboard' },
+						{ title: 'ngComponent' },
+						{ title: 'Produits' }
+					]
+				}
+			},
+			{
+				path: 'recipes',
+				component: RecipesComponent,
+				data: {
+					title: 'Recettes',
+					urls: [
+						{ title: 'Dashboard', url: '/dashboard' },
+						{ title: 'ngComponent' },
+						{ title: 'Recettes' }
+					]
+				}
+			}			
         ]
 	}
 ];
