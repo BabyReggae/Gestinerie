@@ -27,7 +27,8 @@ export class RecipesService {
             this.httpClient
             // .get('http://localhost:8080/api/recipes/bacic_info?token='+ token )
             .get("https://radisnerie-api-production.herokuapp.com/api/recipes?id=all" )
-            .subscribe((data : any) => {
+            .subscribe(
+                (data : any) => {
 
 
                 let colDef = Object.keys( data[0] );
@@ -54,7 +55,11 @@ export class RecipesService {
                     displayedCol : displayedCol
                 });
 
-            });
+                },
+                (err : any ) => {
+                    console.log('err API => ' , err );
+                    alert("Pas de réponse de l'API")
+                });
         });
 
     }
@@ -68,8 +73,9 @@ export class RecipesService {
             console.log( res , "res from api ADD WAY" );
             this.reload();
         },
-        ( err : any ) => {
-            console.log( "an error occured with the api ");
+        (err : any ) => {
+            console.log('err API => ' , err );
+            alert("Pas de réponse de l'API")
         })
 
     }
@@ -83,8 +89,9 @@ export class RecipesService {
             console.log( res , "res from api UPDATED WAY " );
             this.reload();
         },
-        ( err : any ) => {
-            console.log( "an error occured with the api ");
+        (err : any ) => {
+            console.log('err API => ' , err );
+            alert("Pas de réponse de l'API")
         })
     }
 
@@ -102,8 +109,9 @@ export class RecipesService {
                 console.log( res , "res from api " );
                 this.reload();
             },
-            ( err : any ) => {
-                console.log( "an error occured with the api ");
+            (err : any ) => {
+                console.log('err API => ' , err );
+                alert("Pas de réponse de l'API")
             }
             
         )

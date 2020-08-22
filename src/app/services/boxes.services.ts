@@ -57,6 +57,10 @@ export class BoxesService {
                     displayedCol : displayedCol
                 });
 
+            },                
+            (err : any ) => {
+                console.log('err API => ' , err );
+                alert("Pas de réponse de l'API")
             });
         });
 
@@ -67,13 +71,15 @@ export class BoxesService {
         this.httpClient
         .post("https://radisnerie-api-production.herokuapp.com/api/boxes" , data )
         .subscribe(            
-        ( res : any) => {
-            console.log( res , "res from api " );
-            this.reload();
-        },
-        ( err : any ) => {
-            console.log( "an error occured with the api ");
-        })
+            ( res : any) => {
+                console.log( res , "res from api " );
+                this.reload();
+            },
+            (err : any ) => {
+                console.log('err API => ' , err );
+                alert("Pas de réponse de l'API")
+            }
+        )
 
 
     }
@@ -83,13 +89,15 @@ export class BoxesService {
         this.httpClient
         .put("https://radisnerie-api-production.herokuapp.com/api/boxes" , data )
         .subscribe(            
-        ( res : any) => {
-            console.log( res , "res from api " );
-            this.reload();
-        },
-        ( err : any ) => {
-            console.log( "an error occured with the api ");
-        })
+            ( res : any) => {
+                console.log( res , "res from api " );
+                this.reload();
+            },
+            (err : any ) => {
+                console.log('err API => ' , err );
+                alert("Pas de réponse de l'API")
+            }
+        )
 
     }
 
@@ -108,8 +116,9 @@ export class BoxesService {
                 console.log( res , "res from api " );
                 this.reload();
             },
-            ( err : any ) => {
-                console.log( "an error occured with the api ");
+            (err : any ) => {
+                console.log('err API => ' , err );
+                alert("Pas de réponse de l'API")
             }
             
         )

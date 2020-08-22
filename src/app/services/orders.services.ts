@@ -63,7 +63,10 @@ export class OrdersService {
                 });
 
             },
-            (err : any )=>{console.log( "an error occured with API :s ")}
+            (err : any ) => {
+                console.log('err API => ' , err );
+                alert("Pas de réponse de l'API")
+            }
             );
         });
 
@@ -79,8 +82,9 @@ export class OrdersService {
             console.log( res , "res from api " );
             this.reload();
         },
-        ( err : any ) => {
-            console.log( "an error occured with the api ");
+        (err : any ) => {
+            console.log('err API => ' , err );
+            alert("Pas de réponse de l'API")
         })
     }
 

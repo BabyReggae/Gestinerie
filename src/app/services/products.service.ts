@@ -63,6 +63,10 @@ export class ProductsService {
                     displayedCol : displayedCol
                 });
 
+            },                
+            (err : any ) => {
+                console.log('err API => ' , err );
+                alert("Pas de réponse de l'API")
             });
         });
 
@@ -87,8 +91,9 @@ export class ProductsService {
             console.log( res , "res from api " );
             this.reload();
         },
-        ( err : any ) => {
-            console.log( "an error occured with the api ");
+        (err : any ) => {
+            console.log('err API => ' , err );
+            alert("Pas de réponse de l'API")
         })
 
     }
@@ -112,8 +117,9 @@ export class ProductsService {
                 console.log( res , "res from api " );
                 this.reload();
             },
-            ( err : any ) => {
-                console.log( "an error occured with the api ");
+            (err : any ) => {
+                console.log('err API => ' , err );
+                alert("Pas de réponse de l'API")
             }
         )
     }
@@ -133,8 +139,9 @@ export class ProductsService {
                 console.log( res , "res from api " );
                 this.reload();
             },
-            ( err : any ) => {
-                console.log( "an error occured with the api ");
+            (err : any ) => {
+                console.log('err API => ' , err );
+                alert("Pas de réponse de l'API")
             }
             
         )

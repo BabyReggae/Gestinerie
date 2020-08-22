@@ -94,6 +94,10 @@ export class CustomersService {
                     displayedCol : displayedCol
                 });
 
+            },
+            (err : any ) => {
+                console.log('err API => ' , err );
+                alert("Pas de réponse de l'API")
             });
         });
 
