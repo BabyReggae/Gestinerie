@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { promise } from 'protractor';
@@ -22,7 +22,7 @@ export class ProductsService {
     ){}
 
 
-    load_basicInfo( token : string ){
+    get_product( token : string ){
 
         return new Promise( (resolve, reject) => {
 
@@ -69,15 +69,87 @@ export class ProductsService {
     }
 
     add_product(data:any){
-        console.log( "service product add asked " , data  )
+        console.log( "service product add asked " , data  );
+
+        let dataBody = {
+            "name": data.name,
+            "description": data.description,
+            "price": data.price,
+            "image": data.image,
+            "stock": data.stock,
+            "productCategoryId": data.productCategoryId
+        }
+
+        this.httpClient
+        .post("https://radisnerie-api-production.herokuapp.com/api/products" , dataBody )
+        .subscribe(            
+        ( res : any) => {
+            console.log( res , "res from api " );
+            this.reload();
+        },
+        ( err : any ) => {
+            console.log( "an error occured with the api ");
+        })
+
     }
 
     update_product( data : any ){
-        console.log( "service product upd asked " , data  )
+        console.log( "service product upd asked " , data  );
+        let dataBody = {
+            "id" : data.id,
+            "name": data.name,
+            "description": data.description,
+            "price": data.price,
+            "image": data.image,
+            "stock": data.stock,
+            "productCategoryId": data.productCategoryId
+        }
+
+        this.httpClient
+        .put("https://radisnerie-api-production.herokuapp.com/api/products" , dataBody )
+        .subscribe(
+            ( res : any) => {
+                console.log( res , "res from api " );
+                this.reload();
+            },
+            ( err : any ) => {
+                console.log( "an error occured with the api ");
+            }
+        )
     }
 
     delete_product( id : string ){
-        console.log( id );
+        console.log( "service product delete  asked " , id  );
+        let dataBody = { id : id};
+
+        const httpOptions = {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: dataBody
+        };
+
+        this.httpClient
+        .delete("https://radisnerie-api-production.herokuapp.com/api/products" , httpOptions )
+        .subscribe(
+            ( res : any) => {
+                console.log( res , "res from api " );
+                this.reload();
+            },
+            ( err : any ) => {
+                console.log( "an error occured with the api ");
+            }
+            
+        )
+
+
+
+
+
+    }
+
+    reload(){
+        this.router.navigateByUrl('/dashboard', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['/section/products']);
+        }); 
+
     }
 
 }

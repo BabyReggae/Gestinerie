@@ -53,7 +53,7 @@ export class RecipesComponent implements OnInit {
       { color : "danger", content : "Supprimer",  icon : "mdi mdi-24px mdi-delete-forever",  click_func : (e : any)=>{  this.recipesService.delete_recipe( e.id ) } },
     ]
     // prepare summary data 
-    this.recipeDataPromise = this.recipesService.load_basicInfo( fake_token );
+    this.recipeDataPromise = this.recipesService.get_recipe( fake_token );
     this.recipeDataPromise.then((res:any)=>{ this.recipeData = JSON.parse(JSON.stringify(res.data)) })// create a copy of data // not the object instance
 
 
@@ -83,7 +83,7 @@ export class RecipesComponent implements OnInit {
     ]
 
     // prepare summary data 
-    this.productDataPromise = this.productsService.load_basicInfo( fake_token );
+    this.productDataPromise = this.productsService.get_product( fake_token );
    
     this.productsObservable = new Observable(observer => {
 
@@ -102,7 +102,6 @@ export class RecipesComponent implements OnInit {
     
 
     this.openRecipeGestion = ( e : any )=>{ 
-      this.onAdd = true;
       var tmpRecipesData :any = Object.values(this.recipeData);
       var auditedRecipe:any = tmpRecipesData.filter( (recip: { id: any; }) => recip.id == e);
 
@@ -120,7 +119,12 @@ export class RecipesComponent implements OnInit {
   addFunc( e : any ){ this.recipesService.add_recipe( e ) };
 
   initRecipeGestionPanel( curRecipe : any = [] ){
-    this.auditedRecipe = curRecipe.length != 0 ? curRecipe[0] : new Recipe( undefined, "", "", [] )
+    if( curRecipe.length != 0 ) {this.auditedRecipe = curRecipe[0]; this.onUpdate = true}
+    else{
+      this.auditedRecipe = new Recipe( undefined, "", "", [] );
+      this.onAdd = true;
+    }
+
   }
 
   changeRecipeName( name : string ){
@@ -139,8 +143,6 @@ export class RecipesComponent implements OnInit {
       stock : el.stock }
 
     this.auditedRecipe.products.push( tmpNewProduct );
-
-    console.log( this.auditedRecipe.products );
   } 
 
   discardProductFromRecipe( recipeProdIndex : number ){
@@ -151,7 +153,9 @@ export class RecipesComponent implements OnInit {
   }
 
   validationRecipeGestionPanel( finalRecipe: any){
-    console.log( finalRecipe , "BEFORE REQ SQL ADD or UPD " );
+    console.log( finalRecipe ,this.onAdd , this.onUpdate ,  "BEFORE REQ SQL ADD or UPD " );
+    if( this.onAdd ) {this.addFunc( finalRecipe );  this.onAdd = false }
+    else{this.updFunc(  finalRecipe ); this.onUpdate = false }
   }
 
   cancelRecipeGestionPanel(){

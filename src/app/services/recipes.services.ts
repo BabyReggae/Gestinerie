@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { promise } from 'protractor';
@@ -20,12 +20,13 @@ export class RecipesService {
     ){}
 
 
-    load_basicInfo( token : string ){
+    get_recipe( token : string ){
 
         return new Promise( (resolve, reject) => {
-
+            
             this.httpClient
-            .get('http://localhost:8080/api/recipes/bacic_info?token='+ token )
+            // .get('http://localhost:8080/api/recipes/bacic_info?token='+ token )
+            .get("https://radisnerie-api-production.herokuapp.com/api/recipes?id=all" )
             .subscribe((data : any) => {
 
 
@@ -45,8 +46,6 @@ export class RecipesService {
                         data[item].products,
                     );  
                 });
-                
-
 
                 resolve({ 
                     title : "Recettes",
@@ -61,15 +60,60 @@ export class RecipesService {
     }
 
     add_recipe(data:any){
-        console.log( "service product add asked " , data  )
+        console.log( "service RECIPE ADD asked " , data  );
+        this.httpClient
+        .post("https://radisnerie-api-production.herokuapp.com/api/recipes" , data )
+        .subscribe(            
+        ( res : any) => {
+            console.log( res , "res from api ADD WAY" );
+            this.reload();
+        },
+        ( err : any ) => {
+            console.log( "an error occured with the api ");
+        })
+
     }
 
     update_recipe( data : any ){
-        console.log( "service product upd asked " , data  )
+        console.log( "service RECIPE UPD asked " , data  )
+        this.httpClient
+        .put("https://radisnerie-api-production.herokuapp.com/api/recipes" , data )
+        .subscribe(            
+        ( res : any) => {
+            console.log( res , "res from api UPDATED WAY " );
+            this.reload();
+        },
+        ( err : any ) => {
+            console.log( "an error occured with the api ");
+        })
     }
 
     delete_recipe( id : string ){
-        console.log( id );
+        let dataBody = { id : id};
+
+        const httpOptions = {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: dataBody
+        };
+
+        this.httpClient
+        .delete("https://radisnerie-api-production.herokuapp.com/api/recipes" , httpOptions )
+        .subscribe(
+            ( res : any) => {
+                console.log( res , "res from api " );
+                this.reload();
+            },
+            ( err : any ) => {
+                console.log( "an error occured with the api ");
+            }
+            
+        )
+    }
+
+    reload(){
+        this.router.navigateByUrl('/dashboard', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['/section/recipes']);
+        }); 
+
     }
 
 }

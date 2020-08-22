@@ -1,12 +1,80 @@
 <div class="row">
-    <div class="col-md-12">
+    <div *ngIf="!onUpdate" class="col-md-12">
         <app-staychill 
-            [answers]="orderObservable" 
+            [answers]="this.orderObservable" 
             [table_btnAction_funcs]="this.btnsActions"
+            [updfunc]=""
+            [addfunc]=""
+            [externalUpdFunc]="this.openOrderGestion"
+            [filterVal]=""
+        >
+    </app-staychill>
+    </div>
+
+    <div *ngIf="onUpdate" class="col-md-9" >
+        <app-staychill 
+            [answers]="boxesObservable" 
+            [table_btnAction_funcs]="this.btnsAddableBoxesActions"
             [updfunc]=""
             [addfunc]=""
             [filterVal]=""
         >
     </app-staychill>
     </div>
+
+    <div *ngIf="onUpdate" class="col-md-3">
+        <div class="container-fluid mat-elevation-z8 mat-table" style="margin-top: 108px!important;">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <!-- <H1><input type="text" matInput [value]="auditedOrder.name" placeholder="Titre de la recette" (keyup)="changeRecipeName($event.target.value)" required></H1> -->
+                    <h1>{{ displayeddeliveryStatus }} </h1>
+                    <div ngbDropdown>
+                        <button
+                            class="btn btn-outline-primary"
+                            id="dropdownBasic1"
+                            ngbDropdownToggle
+                        >
+                            Changer l'état de la commande
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button class="dropdown-item" (click)="change_orderStatus('PREPARATION' , 'En préparation' )">En préparation</button>
+                            <button class="dropdown-item" (click)="change_orderStatus('SENT' , 'Envoyée')">Envoyée</button>
+                            <button class="dropdown-item" (click)="change_orderStatus('RECEIVED' , 'Délivrée')">Délivrée</button>
+                            <button class="dropdown-item" (click)="change_orderStatus('VALIDATED' , 'Validée')">Validée</button>
+                        </div>
+                    </div>
+                    <hr><br> 
+                    <!-- ici un NGFOR avec produit ( img / name / prix )-->
+                    
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Image</th>
+                            <th>Nom</th>
+                            <th>Prix</th>
+                            <!-- <th>Actions</th> -->
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let order of auditedOrder.baskets; let i = index">
+                            <td><img class="img img-rounded" [src]="order.image" width="40px" height="40px"></td>
+                            <td>{{ order.name }}</td>
+                            <td>{{ order.price }}</td>
+                            <!-- <td> 
+                                <button class="btn btn-sm btn-success ml-2 mr-2"> + </button>
+                                <button (click)="discardBoxeFromOrder( i )" class="btn btn-sm btn-danger ml-2 mr-2"><i class="mdi mdi-delete mdi-18px"></i></button> 
+                            </td> -->
+                          </tr>
+                        </tbody>
+                      </table>
+                    <hr><br>
+                    <button class="btn btn-outline-success ml-2 mr-2" (click)="validationOrderGestionPanel( auditedOrder )" >Valider</button>
+                    <button class="btn btn-outline-danger ml-2 mr-2" (click)="cancelOrderGestionPanel()">Annuler</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
 </div>

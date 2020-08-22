@@ -13,16 +13,26 @@
                 <img src="assets/images/logo-light-icon2.png" alt="logo" class="logo">
               </div> -->
               <p class="login-card-description">Connexion</p>
-              <form action="#!" class="justify-content-center">
+              <form class="justify-content-center" (ngSubmit)="onSignIn(g)" #g="ngForm">
                   <div class="form-group">
                     <label for="email" class="sr-only">Mail</label>
-                    <input type="email" name="email" id="email" class="form-control" placeholder="Email address">
+                    <input type="email" name="email" class="form-control" placeholder="Email address" ngModel required>
                   </div>
                   <div class="form-group mb-4">
                     <label for="password" class="sr-only">Mot de passe</label>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="***********">
+                    <input type="password" name="password" class="form-control" ngModel required placeholder="*******">
                   </div>
-                  <input name="login" id="login" class="btn btn-block login-btn mb-4" type="button" value="Login" (click)="onSignIn()">
+                  <!-- <input name="login" id="login" class="btn btn-block login-btn mb-4" type="button" value="Login"> -->
+
+                  <button class="btn btn-block login-btn mb-4" type="submit"
+                  [disabled]="g.invalid"
+                  [ngClass]="{
+                    'disabled': g.invalid
+                  }">
+                    Connexion
+                  </button>
+
+
                 </form>
                 <a href="#!" class="forgot-password-link">Forgot password?</a>
                 <!-- <p class="login-card-footer-text">Don't have an account? <a href="#!" class="text-reset">Register here</a></p>

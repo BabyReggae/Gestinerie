@@ -41,7 +41,7 @@ export class CustomersComponent implements OnInit {
     let fake_token = "ehoui";
 
     //instanciate save func 
-    this.saveFunc = ( e : any )=>{ this.customerService.update( e ) };
+    this.saveFunc = ( e : any )=>{ this.customerService.upd_customers( e ) };
 
     this.btnsActions = [
       { color : "primary", content : "Voir les commandes", icon : "mdi mdi-24px mdi-eye", click_func : (e: any)=>{ console.log('arr func data => ' , e );this.router.navigate(['section/orders']) } },
@@ -50,7 +50,7 @@ export class CustomersComponent implements OnInit {
 
 
     // prepare summary data 
-    this.mainData = this.customerService.load_basicInfo( fake_token );
+    this.mainData = this.customerService.get_customers( fake_token );
    
     this.customerObservable = new Observable(observer => {
 

@@ -38,11 +38,11 @@ export class ProductsComponent implements OnInit {
 
     this.btnsActions = [
       // { color : "primary", content : "Voir les commandes", icon : "mdi mdi-24px mdi-eye", click_func : (e: any)=>{ console.log('arr func data => ' , e );this.router.navigate(['section/orders']) } },
-      { color : "danger", content : "Supprimer",  icon : "mdi mdi-24px mdi-delete-forever",  click_func : (e : any)=>{  this.productsService.delete_product( e.id ) } },
+      { color : "danger", content : "Supprimer",  icon : "mdi mdi-24px mdi-delete-forever",  click_func : (e : any)=>{  this.productsService.delete_product( e.id ); } },
     ]
 
     // prepare summary data 
-    this.mainData = this.productsService.load_basicInfo( fake_token );
+    this.mainData = this.productsService.get_product( fake_token );
    
     this.productsObservable = new Observable(observer => {
 

@@ -53,7 +53,7 @@ export class BoxesComponent implements OnInit {
       { color : "danger", content : "Supprimer",  icon : "mdi mdi-24px mdi-delete-forever",  click_func : (e : any)=>{  this.boxesService.delete_boxe( e.id ) } },
     ]
     // prepare summary data 
-    this.boxeDataPromise = this.boxesService.load_basicInfo( fake_token );
+    this.boxeDataPromise = this.boxesService.get_boxes( fake_token );
     this.boxeDataPromise.then((res:any)=>{ this.boxeData = JSON.parse(JSON.stringify(res.data)) })// create a copy of data // not the object instance
 
 
@@ -83,7 +83,7 @@ export class BoxesComponent implements OnInit {
     ]
 
     // prepare summary data 
-    this.productDataPromise = this.productsService.load_basicInfo( fake_token );
+    this.productDataPromise = this.productsService.get_product( fake_token );
    
     this.productsObservable = new Observable(observer => {
 
@@ -120,7 +120,7 @@ export class BoxesComponent implements OnInit {
   addFunc( e : any ){ this.boxesService.add_boxe( e ) };
 
   initBoxeGestionPanel( curBoxe : any = [] ){
-    this.auditedBoxe = curBoxe.length != 0 ? curBoxe[0] : new Boxe( undefined, "", "", [] )
+    this.auditedBoxe = curBoxe.length != 0 ? curBoxe[0] : new Boxe( undefined, "", "", "", "", [] )
   }
 
   changeBoxeName( name : string ){
@@ -139,8 +139,6 @@ export class BoxesComponent implements OnInit {
       stock : el.stock }
 
     this.auditedBoxe.products.push( tmpNewProduct );
-
-    console.log( this.auditedBoxe.products );
   } 
 
   discardProductFromBoxe( boxeProdIndex : number ){

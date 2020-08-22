@@ -48,18 +48,19 @@ export class CustomersService {
         // console.log( resAxio );
     }
 
-    load_basicInfo( token : string ){
+    get_customers( token : string ){
         return new Promise( (resolve, reject) => {
 
             this.httpClient
-            .get('http://localhost:8080/api/customers/bacic_info?token='+ token )
+            // .get('http://localhost:8080/api/customers/bacic_info?token='+ token )
+            .get('https://radisnerie-api-production.herokuapp.com/api/users?id=all' )
             .subscribe((data : any) => {
 
                 console.log( data, "from service" );
 
                 let colDef = Object.keys( data[0] );
 
-                let UnShownedCol = ['id' , "address" , "password", "role" , "creditCards" , "createdAt" , "updatedAt", "commands"];
+                let UnShownedCol = ['id' , "address" , "password", /*"role",*/  "creditCards" , "createdAt" , "updatedAt", "commands"];
 
                 let displayedCol = colDef.filter( n=> !UnShownedCol.includes(n) );
 
@@ -86,7 +87,6 @@ export class CustomersService {
                     );  
                 });
                 
-
                 resolve({ 
                     title : "Clients",
                     col : colDef,
@@ -99,14 +99,34 @@ export class CustomersService {
 
     }
 
-    update(data : any){
+    upd_customers(data : any){
         //expected customer object
-        console.log( "make a post request to update dataas customers" , data )
+        console.log( "make a post request to update dataas customers" , data );
+
+        this.httpClient
+        .put("https://radisnerie-api-production.herokuapp.com/api/users" , data )
+        .subscribe(
+            ( res : any) => {
+                console.log( res , "res from api " );
+                this.reload();
+            },
+            ( err : any ) => {
+                console.log( "an error occured with the api ");
+            }
+        )
     }
 
     send_email( emailData:any ){
         console.log( "envoie d'un email ");
         console.log( emailData.email, emailData.text );
+
+    }
+
+    
+    reload(){
+        this.router.navigateByUrl('/dashboard', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['/section/customers']);
+        }); 
 
     }
 

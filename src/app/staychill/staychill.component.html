@@ -78,7 +78,11 @@
 
 
         <button *ngIf="editable" (click)="open_modal(content_modal , element )" class="btn btn-sm btn-info mr-1 ml-1" title="Editer la ligne"><i class="mdi mdi-24px mdi-table-edit"></i></button>
-        <button *ngIf="hasExternalAddComponent" (click)="externalUpdFunc( element.id )" class="btn btn-sm btn-info mr-1 ml-1" title="Editer"><i class="mdi mdi-24px mdi-table-edit"></i></button>
+        <button *ngIf="hasExternalUpdComponent && hasExternalAddComponent" (click)="externalUpdFunc( element.id )" class="btn btn-sm btn-info mr-1 ml-1" title="Editer"><i class="mdi mdi-24px mdi-table-edit"></i></button>
+        <button *ngIf="hasExternalUpdComponent && !hasExternalAddComponent" (click)="externalUpdFunc( element.id )" class="btn btn-sm btn-primary mr-1 ml-1" title="Editer"><i class="mdi mdi-24px mdi-eye"></i></button>
+
+
+        
 
         <div *ngFor="let btn of table_btnAction_funcs; let i = index">
           <button (click)="btn.click_func(element)" class="btn btn-sm btn-{{btn.color}} mr-1 ml-1" [title]="btn.content" ><i [class]="btn.icon"></i> </button>

@@ -141,9 +141,14 @@ export class StaychillComponent implements OnInit{
     let input_loadData : any = {};
 
     if( addPurpose ) this.addModal = true;else this.addModal = false;
+    
     if( addPurpose ){
       for (const key in this.neededDataToAddNewLine ){
-        this.modalData.push( [ this.neededDataToAddNewLine[key] , "", false, false ] );
+        if( this.neededDataToAddNewLine[key] == 'Action' ) continue;
+
+        const isAnDate =  key.toLowerCase().includes("date") ;
+
+        this.modalData.push( [ this.neededDataToAddNewLine[key] , "", isAnDate, false ] );
         input_loadData[ this.neededDataToAddNewLine[key] ] = "";
 
       }
@@ -156,7 +161,7 @@ export class StaychillComponent implements OnInit{
         if (Object.prototype.hasOwnProperty.call(datas, key)) {
           
           const element = datas[key];
-          const isAnDate = ( Date.parse( element ).toString() != "NaN" ) && !isNumber( element );
+          const isAnDate =  key.toLowerCase().includes("date") ;//( Date.parse( element ).toString() != "NaN" ) && !isNumber( element );
           const isUpdatable = false;
   
           input_loadData[ key ] = element;
@@ -168,14 +173,12 @@ export class StaychillComponent implements OnInit{
   
       this.createForm( input_loadData );
     }
-
-    
     
 		this.modalService.open(content_modal, {ariaLabelledBy: 'modal-basic-title', size : "lg"}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
 		}, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-		});
+    });
   }
 
   onSubmit( data:any, addPurpose:any ){
@@ -191,16 +194,6 @@ export class StaychillComponent implements OnInit{
 			return  `with: ${reason}`;
 		}
 	}
-
-  // private testFunc(){
-  //   for (let index = 0; index < this.table_btnAction_funcs.length; index++) {
-
-  //     this.table_btnAction_funcs[index].click_func();
-
-  //   }
-
-  // }
-
 
 } 
 

@@ -24,6 +24,7 @@ import { AuthentificationComponent } from './authentification/authentification.c
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth-guard.service';
 
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true,
     wheelSpeed: 2,

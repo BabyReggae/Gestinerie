@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { rejects } from 'assert';
+import { NgForm } from '@angular/forms';
 
 
 
@@ -17,12 +18,17 @@ export class AuthentificationComponent implements OnInit {
   ngOnInit(): void {
     console.log(' fake redirection , on auth == true || current value => ' , this.authService.isAuth );
     
+    //set connenxion token
+    //localStorage.setItem('token', suc.token );
+    //get connexion token 
+    let connexionToken:any = localStorage.getItem('token');
+
     if( this.authService.isAuth == true  ) this.router.navigate([ "dashboard" ]);
 
   }
 
-  onSignIn(){
-    console.log('click event is up');
+  onSignIn( form:NgForm ){
+    console.log('data => ' , form.value );
 
     let res = this.authService.signIn();
 
