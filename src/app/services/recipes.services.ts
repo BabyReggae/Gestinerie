@@ -26,14 +26,14 @@ export class RecipesService {
             
             this.httpClient
             // .get('http://localhost:8080/api/recipes/bacic_info?token='+ token )
-            .get("https://radisnerie-api-production.herokuapp.com/api/recipes?id=all" )
+            .get("http://radisnerie.fr:3000/api/recipes?id=all" )
             .subscribe(
                 (data : any) => {
 
 
                 let colDef = Object.keys( data[0] );
 
-                let UnShownedCol = ['id'];
+                let UnShownedCol = ['id' , 'realisationTime'];
 
                 let displayedCol = colDef.filter( n=> !UnShownedCol.includes(n) );
 
@@ -45,6 +45,11 @@ export class RecipesService {
                         data[item].name,
                         data[item].caloric,
                         data[item].products,
+                        data[item].tags,
+                        data[item].steps,
+                        data[item].difficulty,
+                        data[item].realisationTime,
+                        
                     );  
                 });
 
@@ -67,7 +72,7 @@ export class RecipesService {
     add_recipe(data:any){
         console.log( "service RECIPE ADD asked " , data  );
         this.httpClient
-        .post("https://radisnerie-api-production.herokuapp.com/api/recipes" , data )
+        .post("http://radisnerie.fr:3000/api/recipes" , data )
         .subscribe(            
         ( res : any) => {
             console.log( res , "res from api ADD WAY" );
@@ -83,7 +88,7 @@ export class RecipesService {
     update_recipe( data : any ){
         console.log( "service RECIPE UPD asked " , data  )
         this.httpClient
-        .put("https://radisnerie-api-production.herokuapp.com/api/recipes" , data )
+        .put("http://radisnerie.fr:3000/api/recipes" , data )
         .subscribe(            
         ( res : any) => {
             console.log( res , "res from api UPDATED WAY " );
@@ -103,7 +108,7 @@ export class RecipesService {
         };
 
         this.httpClient
-        .delete("https://radisnerie-api-production.herokuapp.com/api/recipes" , httpOptions )
+        .delete("http://radisnerie.fr:3000/api/recipes" , httpOptions )
         .subscribe(
             ( res : any) => {
                 console.log( res , "res from api " );

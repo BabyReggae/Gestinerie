@@ -13,7 +13,7 @@
     </app-staychill>
     </div>
 
-    <div *ngIf="onUpdate || onAdd" class="col-md-9" >
+    <div *ngIf="onUpdate || onAdd" class="col-md-4" >
         <app-staychill 
             [answers]="productsObservable" 
             [table_btnAction_funcs]="this.btnsAddableProductActions"
@@ -24,7 +24,8 @@
     </app-staychill>
     </div>
 
-    <div *ngIf="onUpdate || onAdd" class="col-md-3">
+
+    <div *ngIf="onUpdate || onAdd" class="col-md-4">
         <div class="container-fluid mat-elevation-z8 mat-table" style="margin-top: 108px!important;">
             <div class="row">
                 <div class="col-md-12 text-center">
@@ -37,7 +38,8 @@
                           <tr>
                             <th>Image</th>
                             <th>Nom</th>
-                            <th>Prix</th>
+                            <th>Qtt</th>
+                            <th>Unité</th>
                             <th>Actions</th>
                           </tr>
                         </thead>
@@ -45,7 +47,8 @@
                           <tr *ngFor="let product of auditedRecipe.products; let i = index">
                             <td><img class="img img-rounded" [src]="product.image" width="40px" height="40px"></td>
                             <td>{{ product.name }}</td>
-                            <td>{{ product.price }}</td>
+                            <td>  <input type="text" matInput [value]="product.quantity" placeholder="Quantité?" (keyup)="changeQttText($event.target.value, product.id)"> </td>
+                            <td>  <input type="text" matInput [value]="product.unity" placeholder="Unité?" (keyup)="changeUnitText($event.target.value, product.id )"> </td>
                             <td> 
                                 <!-- <button class="btn btn-sm btn-success ml-2 mr-2"> + </button>  -->
                                 <button (click)="discardProductFromRecipe( i )" class="btn btn-sm btn-danger ml-2 mr-2"><i class="mdi mdi-delete mdi-18px"></i></button> 
@@ -61,6 +64,41 @@
         </div>
 
     </div>
+
+    
+    <div *ngIf="onUpdate || onAdd" class="col-md-4">
+        <div class="container-fluid mat-elevation-z8 mat-table" style="margin-top: 108px!important;">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <H1>Etapes  <button class="btn btn-success" (click)="this.addStepInRecipe()"><b>+</b></button></H1>
+                    <hr><br>
+                    <!-- ici un NGFOR avec produit ( img / name / prix )-->
+                    
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Ordre</th>
+                            <th>Instruction</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let step of auditedRecipe.steps; let i = index">
+                            <td>{{ step.order }}</td>
+                            <td><input type="text" matInput [value]="step.details" placeholder="Instruction?" (keyup)="changeInstructionText($event.target.value, step.order)"></td>
+                            <td>
+                                <!-- <button class="btn btn-sm btn-success ml-2 mr-2"> + </button>  -->
+                                <button (click)="discardStepFromRecipe( i )" class="btn btn-sm btn-danger ml-2 mr-2"><i class="mdi mdi-delete mdi-18px"></i></button> 
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 
 
 </div>

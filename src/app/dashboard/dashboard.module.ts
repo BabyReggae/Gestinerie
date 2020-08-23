@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, Router } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
 import { DashboardComponent } from './dashboard.component';
 import { DataTableComponent } from 'app/data-table/data-table.component';
@@ -47,4 +47,7 @@ const routes: Routes = [
         DataTableComponent
     ]
 })
-export class DashboardModule { }
+export class DashboardModule{ 
+
+
+}

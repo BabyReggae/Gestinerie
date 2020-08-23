@@ -1,4 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 
@@ -9,7 +10,7 @@ import { Component, AfterViewInit } from '@angular/core';
 })
 export class DashboardComponent implements AfterViewInit {
     subtitle: string;
-    constructor() {
+    constructor( public router: Router ) {
         this.subtitle = 'This is some text within a card block.';
     }
 

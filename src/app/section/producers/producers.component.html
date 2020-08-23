@@ -1,1 +1,62 @@
-<p>producers works!</p>
+<div class="row">
+    <div *ngIf="!onObserve" class="col-md-12">
+        <app-staychill 
+            [answers]="producersObservable" 
+            [table_btnAction_funcs]="this.btnsActions"
+            [updfunc]="this.updFunc"
+            [addfunc]="this.addFunc"
+            [externalUpdFunc]=""
+            [externalAddFunc]=""
+            [filterVal]="this.filterVal"
+            
+        >
+    </app-staychill>
+    </div>
+
+    <div *ngIf="onObserve" class="col-md-4" >
+        <app-staychill 
+            [answers]="productsObservable" 
+            [table_btnAction_funcs]="this.btnsAddableProductActions"
+            [updfunc]=""
+            [addfunc]=""
+            [filterVal]=""
+        >
+    </app-staychill>
+    </div>
+
+</div>
+
+<ng-template #content_modalMail let-modal >
+    
+  <div class="modal-header cs-modalContainer">
+      
+    <h4 class="modal-title" id="modal-basic-title">Email</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body cs-modalContainer">
+    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit(checkoutForm.value)">
+      <div class="form-group">
+
+        <label for="someData" class="cs-label">Ecrire à :</label>
+        <div class="input-group">
+          <input id="email" formControlName="email" [value]="modalData.email" class="form-control mb-2" placeholder="oui?" disabled>
+        </div>
+
+        <label for="exampleFormControlTextarea1">Contenu</label>
+        <div class="input-group">
+          <textarea class="form-control mb-2" id="text" formControlName="text" rows="6"></textarea>
+        </div>
+      
+      <div class="modal-footer cs-modalContainer">
+          <button type="button" class="btn btn-outline-success" type="button" (click)="onSubmit(checkoutForm.value);modal.close('Save click');">Envoyer</button>
+      </div>
+
+      </div>
+    </form>
+  </div>
+
+</ng-template>
+

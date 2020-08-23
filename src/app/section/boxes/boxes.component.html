@@ -13,7 +13,7 @@
     </app-staychill>
     </div>
 
-    <div *ngIf="onUpdate || onAdd" class="col-md-9" >
+    <div *ngIf="onUpdate || onAdd" class="col-md-8" >
         <app-staychill 
             [answers]="productsObservable" 
             [table_btnAction_funcs]="this.btnsAddableProductActions"
@@ -24,12 +24,24 @@
     </app-staychill>
     </div>
 
-    <div *ngIf="onUpdate || onAdd" class="col-md-3">
+    <div *ngIf="onUpdate || onAdd" class="col-md-4">
         <div class="container-fluid mat-elevation-z8 mat-table" style="margin-top: 108px!important;">
             <div class="row">
                 <div class="col-md-12 text-center">
                     <H1><input type="text" matInput [value]="auditedBoxe.name" placeholder="Titre de la recette" (keyup)="changeBoxeName($event.target.value)" required></H1>
-                    <hr><br>
+                    <hr>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6"><input type="text" matInput [value]="auditedBoxe.price" placeholder="Prix?" (keyup)="changeBoxePrice($event.target.value)"></div>
+                            <div class="col-md-6"><input type="text" matInput [value]="auditedBoxe.image" placeholder="Img?" (keyup)="changeBoxeImage($event.target.value)"></div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12"><input type="text" matInput [value]="auditedBoxe.description" placeholder="Description?" (keyup)="changeBoxeDescrption($event.target.value)"></div>
+                        </div>
+                    </div>
                     <!-- ici un NGFOR avec produit ( img / name / prix )-->
                     
                     <table class="table">

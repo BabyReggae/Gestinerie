@@ -32,7 +32,12 @@ export class BoxesComponent implements OnInit {
   onUpdate: boolean = false;
   onAdd: boolean = false;
 
-  constructor( private boxesService : BoxesService, private productsService : ProductsService, private router: Router,private route: ActivatedRoute ) {
+  constructor( 
+    private boxesService : BoxesService, 
+    private productsService : ProductsService, 
+    private router: Router,
+    private route: ActivatedRoute 
+    ) {
   }
 
   ngOnInit(): void {
@@ -102,7 +107,7 @@ export class BoxesComponent implements OnInit {
     
 
     this.openBoxeGestion = ( e : any )=>{ 
-      this.onAdd = true;
+      
       var tmpBoxesData :any = Object.values(this.boxeData);
       var auditedBoxe:any = tmpBoxesData.filter( (recip: { id: any; }) => recip.id == e);
 
@@ -120,7 +125,14 @@ export class BoxesComponent implements OnInit {
   addFunc( e : any ){ this.boxesService.add_boxe( e ) };
 
   initBoxeGestionPanel( curBoxe : any = [] ){
-    this.auditedBoxe = curBoxe.length != 0 ? curBoxe[0] : new Boxe( undefined, "", "", "", "", [] )
+    // this.auditedBoxe = curBoxe.length != 0 ? curBoxe[0] : new Boxe( undefined, "", "", "", "", [] )
+    if( curBoxe.length != 0 ){
+      this.auditedBoxe = curBoxe[0];
+      this.onUpdate = true;
+    }else{
+      this.auditedBoxe = new Boxe( undefined, "", "", "", "", [] );
+      this.onAdd = true;
+    }
   }
 
   changeBoxeName( name : string ){
@@ -128,7 +140,6 @@ export class BoxesComponent implements OnInit {
   }
 
   addProductInBoxe( el:any ){
-
     let tmpNewProduct:any = { 
       id : el.id,
       name : el.name,
@@ -136,7 +147,8 @@ export class BoxesComponent implements OnInit {
       image : el.image,  
       price : el.price, 
       productCategoryId : el.productCategoryId, 
-      stock : el.stock }
+      stock : el.stock 
+    }
 
     this.auditedBoxe.products.push( tmpNewProduct );
   } 
@@ -149,7 +161,38 @@ export class BoxesComponent implements OnInit {
   }
 
   validationBoxeGestionPanel( finalBoxe: any){
-    console.log( finalBoxe , "BEFORE REQ SQL ADD or UPD " );
+    console.log( finalBoxe , "BEFORE REQ SQL ADD or UPD ", finalBoxe.products );
+    let arrProdId : any[] = [];
+
+
+      Object.keys( finalBoxe.products ).map((e)=>{
+        let tmpId = finalBoxe.products[e].id;
+        arrProdId.push( tmpId )
+      })
+
+    let endBoxe = {};
+    if( this.onUpdate ) {
+      endBoxe = { id : finalBoxe.id, name : finalBoxe.name, price : finalBoxe.price, description : finalBoxe.description, image : finalBoxe.image, products : arrProdId }
+      this.boxesService.update_boxe( endBoxe );
+    }
+    if( this.onAdd ){ 
+      endBoxe = { name : finalBoxe.name, price : finalBoxe.price, description : finalBoxe.description, image : finalBoxe.image, products : arrProdId }
+      this.boxesService.add_boxe( endBoxe );
+    }
+    
+  }
+
+  changeBoxeDescrption(val :any){
+    console.log( this.auditedBoxe );  
+    this.auditedBoxe.description = val;
+  }
+
+  changeBoxePrice(val :any){
+    this.auditedBoxe.price = val;
+  }
+
+  changeBoxeImage(val :any){
+    this.auditedBoxe.image = val;
   }
 
   cancelBoxeGestionPanel(){

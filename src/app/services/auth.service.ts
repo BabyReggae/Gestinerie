@@ -18,14 +18,32 @@ export class AuthService {
 
     isAuth = false;
 
-    signIn( /*loginUser : loginUser*/ ) {
+    signIn( loginObj : any ) {
         return new Promise(
             (resolve, reject) => {
-                setTimeout( ()=>{
+            //http://radisnerie.fr:3000/api/login
+            this.httpClient
+            .post('http://radisnerie.fr:3000/api/login', loginObj )
+            .subscribe( 
+                (data : any) => {
                     this.isAuth = true;
-                    console.log('auth component set auth to true')
+                    localStorage.setItem('token', data.token );
                     resolve( true );
-                } , 1000 )
+                },
+                (err:any)=>{
+                    alert('combinaison email/mot de passe incorrecte');
+                    reject( err );
+                }
+            )
+
+
+
+                // setTimeout( (e)=>{
+                //     this.isAuth = true;
+                //     localStorage.setItem('token', "1U53783470K3n" );
+                //     console.log('auth component set auth to true' , e )
+                //     resolve( true );
+                // } , 1000 )
             //api call to check userinformation validity
             // this.httpClient
             // .post('http://localhost:8080/api/user/log_user', { loginReq :  loginUser } )
@@ -48,6 +66,7 @@ export class AuthService {
 
     signOut( /*token : string*/  ) {
         this.isAuth = false;
+        localStorage.setItem('token' , '');
         // return new Promise(
         //     (resolve, reject) => {
         //         console.log( token , "TOKEN BEFORE SEND " );

@@ -27,6 +27,7 @@ import { RecipesService } from '../services/recipes.services';
 import { RecipesComponent } from './recipes/recipes.component';
 import { ProductsComponent } from './products/products.component';
 import { BoxesService } from '../services/boxes.services';
+import { ProducersService } from '../services/producers.service';
 
 
 
@@ -59,7 +60,8 @@ import { BoxesService } from '../services/boxes.services';
       OrdersService,
       ProductsService,
       RecipesService,
-      BoxesService
+      BoxesService,
+      ProducersService
     ]
   })
   export class SectionsModule {}

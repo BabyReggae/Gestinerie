@@ -74,6 +74,8 @@ export class StaychillComponent implements OnInit{
     this.hasExternalAddComponent = ( this.externalAddFunc != undefined );
     this.hasExternalUpdComponent = ( this.externalUpdFunc != undefined );
 
+    console.log( this.addElementAllow , " addable ? " );
+
     this.dataSource = new MatTableDataSource( ELEMENT_DATA );
 
     this.answers.subscribe({
@@ -111,6 +113,7 @@ export class StaychillComponent implements OnInit{
 
     newdatas = newdatas.map( (a: any) =>{
       if( a.products != undefined && typeof( a.products ) != "number" ) a.products = a.products.length;
+      if( a.steps != undefined && typeof( a.steps ) != "number" ) a.steps = a.steps.length;      
       return a;
     })
 
@@ -141,7 +144,7 @@ export class StaychillComponent implements OnInit{
     let input_loadData : any = {};
 
     if( addPurpose ) this.addModal = true;else this.addModal = false;
-    
+
     if( addPurpose ){
       for (const key in this.neededDataToAddNewLine ){
         if( this.neededDataToAddNewLine[key] == 'Action' ) continue;

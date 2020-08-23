@@ -27,16 +27,18 @@ export class ProductsService {
         return new Promise( (resolve, reject) => {
 
             this.httpClient
-            .get('https://radisnerie-api-production.herokuapp.com/api/products?id=all' )
+            .get('http://radisnerie.fr:3000/api/products?id=all' )
             // .get('http://localhost:8080/api/products/bacic_info?token=coucou' )
             .subscribe((data : any) => {
 
 
                 let colDef = Object.keys( data[0] );
 
-                let UnShownedCol = ['id','createdAt', 'updatedAt'];
+                let UnShownedCol = ['id','createdAt', 'description', 'updatedAt', 'sellable' , 'productCategoryId '];
 
                 let displayedCol = colDef.filter( n=> !UnShownedCol.includes(n) );
+
+
 
                 let testy = Object.keys(data)
                 .map(item => {  
@@ -49,12 +51,13 @@ export class ProductsService {
                         data[item].image,
                         data[item].stock,
                         data[item].productCategoryId,
+                        data[item].sellable,
                         data[item].createdAt,
                         data[item].updatedAt
                     );  
                 });
                 
-
+                console.log( "ON LOAD PRODUCTS ! " , data );
 
                 resolve({ 
                     title : "Produits",
@@ -81,11 +84,14 @@ export class ProductsService {
             "price": data.price,
             "image": data.image,
             "stock": data.stock,
+            "sellable" : true,
             "productCategoryId": data.productCategoryId
         }
 
+        console.log("BODY DE LA REQ => " , dataBody );
+
         this.httpClient
-        .post("https://radisnerie-api-production.herokuapp.com/api/products" , dataBody )
+        .post("http://radisnerie.fr:3000/api/products" , dataBody )
         .subscribe(            
         ( res : any) => {
             console.log( res , "res from api " );
@@ -107,11 +113,12 @@ export class ProductsService {
             "price": data.price,
             "image": data.image,
             "stock": data.stock,
+            "sellable" : true,
             "productCategoryId": data.productCategoryId
         }
 
         this.httpClient
-        .put("https://radisnerie-api-production.herokuapp.com/api/products" , dataBody )
+        .put("http://radisnerie.fr:3000/api/products" , dataBody )
         .subscribe(
             ( res : any) => {
                 console.log( res , "res from api " );
@@ -133,7 +140,7 @@ export class ProductsService {
         };
 
         this.httpClient
-        .delete("https://radisnerie-api-production.herokuapp.com/api/products" , httpOptions )
+        .delete("http://radisnerie.fr:3000/api/products" , httpOptions )
         .subscribe(
             ( res : any) => {
                 console.log( res , "res from api " );
@@ -145,10 +152,6 @@ export class ProductsService {
             }
             
         )
-
-
-
-
 
     }
 

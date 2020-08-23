@@ -24,7 +24,7 @@ export class CustomersService {
     test_fct(){ //async
         console.log( 'COUCOU ');
         // var settings = {
-        //     "url": "https://radisnerie-api-production.herokuapp.com/api/products",
+        //     "url": "http://radisnerie.fr:3000/api/products",
         //     "method": "GET",
         //     "timeout": 0,
         //     "headers": {
@@ -36,7 +36,7 @@ export class CustomersService {
 
 
         // let resAxio = await axios({
-        //     url: 'https://radisnerie-api-production.herokuapp.com/api/users',
+        //     url: 'http://radisnerie.fr:3000/api/users',
         //     method: 'GET',
         //     data: {id: 'ALL'}
         // })
@@ -53,7 +53,7 @@ export class CustomersService {
 
             this.httpClient
             // .get('http://localhost:8080/api/customers/bacic_info?token='+ token )
-            .get('https://radisnerie-api-production.herokuapp.com/api/users?id=all' )
+            .get('http://radisnerie.fr:3000/api/users?id=all' )
             .subscribe((data : any) => {
 
                 console.log( data, "from service" );
@@ -108,7 +108,7 @@ export class CustomersService {
         console.log( "make a post request to update dataas customers" , data );
 
         this.httpClient
-        .put("https://radisnerie-api-production.herokuapp.com/api/users" , data )
+        .put("http://radisnerie.fr:3000/api/users" , data )
         .subscribe(
             ( res : any) => {
                 console.log( res , "res from api " );

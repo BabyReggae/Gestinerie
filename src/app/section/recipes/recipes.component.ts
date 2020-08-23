@@ -42,7 +42,6 @@ export class RecipesComponent implements OnInit {
     /* *************************************************************************** */
     //get optional init filter value
     this.route.queryParams.subscribe(params => {
-      console.log( params );
       this.filterVal = params.filter != undefined ? params.filter : "";
     })
     //get token from storage session
@@ -54,7 +53,7 @@ export class RecipesComponent implements OnInit {
     ]
     // prepare summary data 
     this.recipeDataPromise = this.recipesService.get_recipe( fake_token );
-    this.recipeDataPromise.then((res:any)=>{ this.recipeData = JSON.parse(JSON.stringify(res.data)) })// create a copy of data // not the object instance
+    this.recipeDataPromise.then((res:any)=>{ this.recipeData = JSON.parse(JSON.stringify(res.data));console.log('RECIPE COMPO LOAD DATA +> ' , this.recipeData ) })// create a copy of data // not the object instance
 
 
     this.recipesObservable = new Observable(observer => {
@@ -63,8 +62,6 @@ export class RecipesComponent implements OnInit {
         ( res: any) => { 
           console.log(" local >>> " , res.data );
           
-          // mettre les valeurs dans une variable this.thecompoentn pour retrouver la recette correspondantes avec l'id reçu depuis chillcomponent ...  MERCI et GOOD LUCK DUDE =) ( oui je me parle a moi , meme et alolrs ya quoi )
-
           observer.next( res );
         },
         ( err: any) => { console.log('ça, sa pue') } 
@@ -97,15 +94,11 @@ export class RecipesComponent implements OnInit {
         // observer.complete();
     });
 
-
     //GESTION DES MODFIS SUR LES RECETTES
-    
-
     this.openRecipeGestion = ( e : any )=>{ 
       var tmpRecipesData :any = Object.values(this.recipeData);
       var auditedRecipe:any = tmpRecipesData.filter( (recip: { id: any; }) => recip.id == e);
 
-      console.log( "result of reseach => " ,  );
 
       this.initRecipeGestionPanel( auditedRecipe );
 
@@ -119,9 +112,29 @@ export class RecipesComponent implements OnInit {
   addFunc( e : any ){ this.recipesService.add_recipe( e ) };
 
   initRecipeGestionPanel( curRecipe : any = [] ){
+    console.log('recipe DISPLAY => ' , curRecipe );
+
+    if( curRecipe.length != 0 ){
+      Object
+      .keys(curRecipe[0].products)
+      .map(prod  => { 
+        let tmpId = curRecipe[0].products[prod].id,
+        tmpUnity = curRecipe[0].products[prod].unity,
+        tmpImg = curRecipe[0].products[prod].image,
+        tmpName = curRecipe[0].products[prod].name,
+        tmpQtt = curRecipe[0].products[prod].quantity;
+  
+        curRecipe[0].products[prod] = {  id : tmpId, image : tmpImg, name : tmpName  , unity : tmpUnity, quantity : tmpQtt }
+      }
+      )
+    }
+
+    console.log('recipe CONFIG DISPLAY => ' , curRecipe );
+
+
     if( curRecipe.length != 0 ) {this.auditedRecipe = curRecipe[0]; this.onUpdate = true}
     else{
-      this.auditedRecipe = new Recipe( undefined, "", "", [] );
+      this.auditedRecipe = new Recipe( undefined, "", "", [], [], [], "normal" , "1h" );
       this.onAdd = true;
     }
 
@@ -133,14 +146,19 @@ export class RecipesComponent implements OnInit {
 
   addProductInRecipe( el:any ){
 
-    let tmpNewProduct:any = { 
+    let tmpNewProduct:any = {
       id : el.id,
+      image: el.image,
       name : el.name,
-      description : el.description,  
-      image : el.image,  
-      price : el.price, 
-      productCategoryId : el.productCategoryId, 
-      stock : el.stock }
+      unity: "",
+      quantity: ""
+      // name : el.name,
+      // description : el.description,  
+      // image : el.image,  
+      // price : el.price, 
+      // productCategoryId : el.productCategoryId, 
+      // stock : el.stock 
+    }
 
     this.auditedRecipe.products.push( tmpNewProduct );
   } 
@@ -152,8 +170,77 @@ export class RecipesComponent implements OnInit {
     console.log( this.auditedRecipe );
   }
 
+  addStepInRecipe(){
+    let newIndex: number;
+    if( this.auditedRecipe.steps != undefined ) newIndex = this.auditedRecipe.steps.length + 1;
+    else newIndex = 1;
+    
+    let newStep = { 
+      order : newIndex, 
+      details : "" 
+    }
+
+    this.auditedRecipe.steps.push( newStep );
+  }
+
+  changeInstructionText( val:any , index : number ){
+
+    Object.keys(this.auditedRecipe).map( ( key ) => {   
+      if( key == "steps" ){
+        this.auditedRecipe[key].forEach((element: any) => {
+          if( element.order == index ) element.details = val;
+        });
+      }
+    });
+
+  }
+
+  changeQttText(  val:any , index : number ){
+    Object.keys(this.auditedRecipe).map( ( key ) => {   
+      if( key == "products" ){
+        this.auditedRecipe[key].forEach((element: any) => {
+          if( element.id == index ) element.quantity = val;
+        });
+      }
+    });
+  }
+
+  changeUnitText( val:any , index : number ){
+    Object.keys(this.auditedRecipe).map( ( key ) => {   
+      if( key == "products" ){
+        this.auditedRecipe[key].forEach((element: any) => {
+          if( element.id == index ) element.unity = val;
+        });
+      }
+    });
+  }
+
+  discardStepFromRecipe( recipeStepIndex : number ){
+    this.auditedRecipe.steps.splice( recipeStepIndex, 1 );
+  }
+
   validationRecipeGestionPanel( finalRecipe: any){
-    console.log( finalRecipe ,this.onAdd , this.onUpdate ,  "BEFORE REQ SQL ADD or UPD " );
+    console.log( finalRecipe , "BEFORE REQ SQL ADD or UPD " );
+    Object.keys( finalRecipe.products ).map( (e)=>{ 
+      let tmpId = finalRecipe.products[e].id,
+      tmpUnity = finalRecipe.products[e].unity,
+      tmpQtt = finalRecipe.products[e].quantity;
+
+      finalRecipe.products[e] = { id : tmpId, unity : tmpUnity, quantity : tmpQtt };
+     })
+
+     Object.keys( finalRecipe.steps ).map( (e)=>{ 
+      let tmpDetails = finalRecipe.steps[e].details,
+      tmpOrder = finalRecipe.steps[e].order;
+
+      finalRecipe.steps[e] = { order : tmpOrder, details : tmpDetails };
+     })
+     
+
+
+     console.log("BEFORE SEND TO REQ +>> " , finalRecipe );
+
+
     if( this.onAdd ) {this.addFunc( finalRecipe );  this.onAdd = false }
     else{this.updFunc(  finalRecipe ); this.onUpdate = false }
   }
