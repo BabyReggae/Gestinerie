@@ -27,7 +27,7 @@ export class OrdersService {
         return new Promise( (resolve, reject) => {
 
             this.httpClient
-            .get('http://radisnerie.fr:3000/api/commands?id=all' )
+            .get('https://radisnerie-api-production.herokuapp.com/api/commands?id=all' )
             .subscribe((data : any) => {
 
                 console.log( data, "from orders" );
@@ -76,7 +76,7 @@ export class OrdersService {
     upd_orders( data : any){
         console.log( "service product upd asked " , data  )
         this.httpClient
-        .put("http://radisnerie.fr:3000/api/commands" , data )
+        .put("https://radisnerie-api-production.herokuapp.com/api/commands" , data )
         .subscribe(            
         ( res : any) => {
             console.log( res , "res from api " );

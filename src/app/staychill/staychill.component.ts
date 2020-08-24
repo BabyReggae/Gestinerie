@@ -11,6 +11,7 @@ import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-
 import { cpuUsage } from 'process';
 import { isNumber } from 'util';
 import { Recipe } from '../data-models/recipes.model';
+import { ProductsService } from '../services/products.service';
 
 
 let ELEMENT_DATA: any[] = [
@@ -27,6 +28,7 @@ let ELEMENT_DATA: any[] = [
 
 
 export class StaychillComponent implements OnInit{
+
 
   constructor(private modalService: NgbModal,  private formBuilder : FormBuilder, private router : Router ){
   }
@@ -66,6 +68,9 @@ export class StaychillComponent implements OnInit{
   addModal:boolean = false;
   hasExternalAddComponent:boolean=false;
   hasExternalUpdComponent:boolean=false;
+  //flemme
+  productCategorie:any;
+  categorieChoose: any;
 
   ngOnInit(){
 
@@ -138,6 +143,10 @@ export class StaychillComponent implements OnInit{
     this.checkoutForm = this.formBuilder.group( data );
   }
 
+  change_productCateg( e:any , lib:any ){
+    this.categorieChoose = e;
+  }
+
   
 	open_modal(content_modal:string, datas:any, addPurpose:any = false ) {
     this.modalData = [];
@@ -185,6 +194,7 @@ export class StaychillComponent implements OnInit{
   }
 
   onSubmit( data:any, addPurpose:any ){
+    console.log( data , addPurpose );
     if( addPurpose ) this.addfunc( data );else this.updfunc( data );
   }
 

@@ -44,7 +44,7 @@ export class CustomersComponent implements OnInit {
     this.saveFunc = ( e : any )=>{ this.customerService.upd_customers( e ) };
 
     this.btnsActions = [
-      { color : "primary", content : "Voir les commandes", icon : "mdi mdi-24px mdi-eye", click_func : (e: any)=>{ console.log('arr func data => ' , e );this.router.navigate(['section/orders']) } },
+      // { color : "primary", content : "Voir les commandes", icon : "mdi mdi-24px mdi-eye", click_func : (e: any)=>{ console.log('arr func data => ' , e );this.router.navigate(['section/orders']) } },
       { color : "warning", content : "Mailer",  icon : "mdi mdi-24px mdi-email",  click_func : (e:any)=>{  console.log( "receive customer side >> ", e );this.open_emailModal( this.content_modalMail, e.email ) }  },
     ]
 

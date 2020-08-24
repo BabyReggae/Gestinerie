@@ -47,7 +47,7 @@ export class OrdersComponent implements OnInit {
 
     this.btnsActions = [
       // { color : "primary", content : "Voir la commande", icon : "mdi mdi-24px mdi-eye", click_func : (e: any)=>{ console.log('SEE cmd asked , data  => ' , e )  }},
-      { color : "info", content : "Voir fiche Client",  icon : "mdi mdi-24px mdi-clipboard-account",  click_func : (e: any)=>{this.router.navigate(['section/customers'], { queryParams: { filter : e.idClient } } ) }  },
+      // { color : "info", content : "Voir fiche Client",  icon : "mdi mdi-24px mdi-clipboard-account",  click_func : (e: any)=>{this.router.navigate(['section/customers'], { queryParams: { filter : e.idClient } } ) }  },
     ]
 
     // prepare summary data 
@@ -111,7 +111,9 @@ export class OrdersComponent implements OnInit {
     console.log( curRecipe , "check Dat <<<<< ");
     this.auditedOrder = curRecipe[0];
     let tmpStatus = this.auditedOrder.deliveryStatus;
-    this.displayeddeliveryStatus = this.statusDict[tmpStatus];
+
+    
+    this.displayeddeliveryStatus = tmpStatus;
   }
 
   change_orderStatus( name : string, frontName:any ){

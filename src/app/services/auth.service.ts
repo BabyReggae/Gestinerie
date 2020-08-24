@@ -21,9 +21,9 @@ export class AuthService {
     signIn( loginObj : any ) {
         return new Promise(
             (resolve, reject) => {
-            //http://radisnerie.fr:3000/api/login
+            //https://radisnerie-api-production.herokuapp.com/api/login
             this.httpClient
-            .post('http://radisnerie.fr:3000/api/login', loginObj )
+            .post('https://radisnerie-api-production.herokuapp.com/api/login', loginObj )
             .subscribe( 
                 (data : any) => {
                     this.isAuth = true;

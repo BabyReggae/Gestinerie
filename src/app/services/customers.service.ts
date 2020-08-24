@@ -24,7 +24,7 @@ export class CustomersService {
     test_fct(){ //async
         console.log( 'COUCOU ');
         // var settings = {
-        //     "url": "http://radisnerie.fr:3000/api/products",
+        //     "url": "https://radisnerie-api-production.herokuapp.com/api/products",
         //     "method": "GET",
         //     "timeout": 0,
         //     "headers": {
@@ -36,7 +36,7 @@ export class CustomersService {
 
 
         // let resAxio = await axios({
-        //     url: 'http://radisnerie.fr:3000/api/users',
+        //     url: 'https://radisnerie-api-production.herokuapp.com/api/users',
         //     method: 'GET',
         //     data: {id: 'ALL'}
         // })
@@ -53,14 +53,14 @@ export class CustomersService {
 
             this.httpClient
             // .get('http://localhost:8080/api/customers/bacic_info?token='+ token )
-            .get('http://radisnerie.fr:3000/api/users?id=all' )
+            .get('https://radisnerie-api-production.herokuapp.com/api/users?id=all' )
             .subscribe((data : any) => {
 
                 console.log( data, "from service" );
 
                 let colDef = Object.keys( data[0] );
 
-                let UnShownedCol = ['id' , "address" , "password", /*"role",*/  "creditCards" , "createdAt" , "updatedAt", "commands"];
+                let UnShownedCol = ['id' , "address" , "password", /*"role",*/  "creditCards" , "createdAt" , "updatedAt", "commands", 'additional_address'];
 
                 let displayedCol = colDef.filter( n=> !UnShownedCol.includes(n) );
 
@@ -108,7 +108,7 @@ export class CustomersService {
         console.log( "make a post request to update dataas customers" , data );
 
         this.httpClient
-        .put("http://radisnerie.fr:3000/api/users" , data )
+        .put("https://radisnerie-api-production.herokuapp.com/api/users" , data )
         .subscribe(
             ( res : any) => {
                 console.log( res , "res from api " );

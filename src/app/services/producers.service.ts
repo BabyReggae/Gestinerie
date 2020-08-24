@@ -25,7 +25,7 @@ export class ProducersService {
         return new Promise( (resolve, reject) => {
 
             this.httpClient
-            .get('http://radisnerie.fr:3000/api/retailers?id=all' )
+            .get('https://radisnerie-api-production.herokuapp.com/api/retailers?id=all' )
             .subscribe((data : any) => {
 
                 let colDef = Object.keys( data[0] );
@@ -72,7 +72,7 @@ export class ProducersService {
     add_producers(data : any){
         console.log( 'ADD ASKED +> ' , data );
         this.httpClient
-        .post("http://radisnerie.fr:3000/api/retailers" , data )
+        .post("https://radisnerie-api-production.herokuapp.com/api/retailers" , data )
         .subscribe(            
         ( res : any) => {
             console.log( res , "res from api " );
@@ -88,7 +88,7 @@ export class ProducersService {
     upd_producers( data : any){
         console.log( "UPD asked " , data  );
         this.httpClient
-        .put("http://radisnerie.fr:3000/api/retailers" , data )
+        .put("https://radisnerie-api-production.herokuapp.com/api/retailers" , data )
         .subscribe(            
         ( res : any) => {
             console.log( res , "res from api " );

@@ -25,7 +25,7 @@ export class BoxesService {
         return new Promise( (resolve, reject) => {
 
             this.httpClient
-            .get('http://radisnerie.fr:3000/api/baskets?id=all')
+            .get('https://radisnerie-api-production.herokuapp.com/api/baskets?id=all')
             .subscribe((data : any) => {
 
 
@@ -69,7 +69,7 @@ export class BoxesService {
     add_boxe(data:any){
         console.log( "service product add asked " , data  );
         this.httpClient
-        .post("http://radisnerie.fr:3000/api/baskets" , data )
+        .post("https://radisnerie-api-production.herokuapp.com/api/baskets" , data )
         .subscribe(            
             ( res : any) => {
                 console.log( res , "res from api " );
@@ -87,7 +87,7 @@ export class BoxesService {
     update_boxe( data : any ){
         console.log( "service product upd asked " , data  )
         this.httpClient
-        .put("http://radisnerie.fr:3000/api/baskets" , data )
+        .put("https://radisnerie-api-production.herokuapp.com/api/baskets" , data )
         .subscribe(            
             ( res : any) => {
                 console.log( res , "res from api " );
@@ -110,7 +110,7 @@ export class BoxesService {
         };
 
         this.httpClient
-        .delete("http://radisnerie.fr:3000/api/baskets" , httpOptions )
+        .delete("https://radisnerie-api-production.herokuapp.com/api/baskets" , httpOptions )
         .subscribe(
             ( res : any) => {
                 console.log( res , "res from api " );

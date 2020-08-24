@@ -26,7 +26,7 @@ export class RecipesService {
             
             this.httpClient
             // .get('http://localhost:8080/api/recipes/bacic_info?token='+ token )
-            .get("http://radisnerie.fr:3000/api/recipes?id=all" )
+            .get("https://radisnerie-api-production.herokuapp.com/api/recipes?id=all" )
             .subscribe(
                 (data : any) => {
 
@@ -72,7 +72,7 @@ export class RecipesService {
     add_recipe(data:any){
         console.log( "service RECIPE ADD asked " , data  );
         this.httpClient
-        .post("http://radisnerie.fr:3000/api/recipes" , data )
+        .post("https://radisnerie-api-production.herokuapp.com/api/recipes" , data )
         .subscribe(            
         ( res : any) => {
             console.log( res , "res from api ADD WAY" );
@@ -88,7 +88,7 @@ export class RecipesService {
     update_recipe( data : any ){
         console.log( "service RECIPE UPD asked " , data  )
         this.httpClient
-        .put("http://radisnerie.fr:3000/api/recipes" , data )
+        .put("https://radisnerie-api-production.herokuapp.com/api/recipes" , data )
         .subscribe(            
         ( res : any) => {
             console.log( res , "res from api UPDATED WAY " );
@@ -108,7 +108,7 @@ export class RecipesService {
         };
 
         this.httpClient
-        .delete("http://radisnerie.fr:3000/api/recipes" , httpOptions )
+        .delete("https://radisnerie-api-production.herokuapp.com/api/recipes" , httpOptions )
         .subscribe(
             ( res : any) => {
                 console.log( res , "res from api " );

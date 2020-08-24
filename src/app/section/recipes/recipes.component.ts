@@ -221,6 +221,8 @@ export class RecipesComponent implements OnInit {
 
   validationRecipeGestionPanel( finalRecipe: any){
     console.log( finalRecipe , "BEFORE REQ SQL ADD or UPD " );
+    finalRecipe.caloric = Math.round(Math.random()*1000);
+
     Object.keys( finalRecipe.products ).map( (e)=>{ 
       let tmpId = finalRecipe.products[e].id,
       tmpUnity = finalRecipe.products[e].unity,

@@ -15,7 +15,7 @@
         <div class="cs-modal-body">
           <div *ngFor="let lineInfo of modalData" >
 
-            <div *ngIf="displayedColumns.includes( lineInfo[0]) && lineInfo[2]"> 
+            <!-- <div *ngIf="displayedColumns.includes( lineInfo[0]) && lineInfo[2]"> 
               <label for="dateOfBirth" class="cs-label">{{lineInfo[0]}}</label>
               <div class="input-group">
                 <input [id]="lineInfo[0]" [formControlName]="lineInfo[0]" class="form-control mb-2" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
@@ -23,14 +23,34 @@
                   <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button"><i class="fa fa-calendar"></i></button>
                 </div>
               </div>
-            </div>
-    
-              <div *ngIf="displayedColumns.includes( lineInfo[0] ) && !lineInfo[2]">
-                <label for="someData" class="cs-label">{{lineInfo[0]}}</label>
-                <div class="input-group">
-                  <input [id]="lineInfo[0]" [formControlName]="lineInfo[0]" class="form-control mb-2" placeholder="">
-                </div>
+            </div> -->
+            <!-- <div *ngIf="displayedColumns.includes( lineInfo[0] ) && lineInfo[0].includes('productCategoryId')">
+              <label for="someData" class="cs-label">productCategoryId</label>
+                <div ngbDropdown>
+                  <button
+                      class="btn btn-secondary"
+                      id="dropdownBasic1"
+                      ngbDropdownToggle
+                  >
+                      Choix de la catégorie
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                      <button class="dropdown-item" (click)="change_productCateg( 1 , 'Légumes' )">Légumes</button>
+                      <button class="dropdown-item" (click)="change_productCateg( 2 , 'Fruit')">Fruit</button>
+                      <button class="dropdown-item" (click)="change_productCateg( 3 , 'Viande')">Viande</button>
+                      <button class="dropdown-item" (click)="change_productCateg( 4 , 'Fromage')">Fromage</button>
+                  </div>
               </div>
+            </div> -->
+
+            <div *ngIf="displayedColumns.includes( lineInfo[0] ) ">
+              <label for="someData" class="cs-label">{{lineInfo[0]}}</label>
+              <div class="input-group">
+                <input [id]="lineInfo[0]" [formControlName]="lineInfo[0]" class="form-control mb-2" placeholder="">
+              </div>
+            </div>
+
+            <!-- productCategoryId -->
           </div>
         </div>
 
